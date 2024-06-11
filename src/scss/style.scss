@@ -1,0 +1,21 @@
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fa-arrow-left-long {
+  cursor: pointer;
+}
+
+.btn-orange {
+  background-color: rgb(255, 69, 0);
+  border-color: orangered;
+  color: white;
+  padding: 0.5rem 2.5rem;
+  &:hover {
+    border: 1px solid orangered;
+  }
+}
