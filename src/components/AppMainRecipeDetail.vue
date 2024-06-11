@@ -30,10 +30,12 @@ export default {
   },
 
   computed: {
+    // funzione per ottenere l'url dell'immagine
     recipeImage() {
       return "../../assets/" + this.recipe.image;
     },
 
+    // funzione per dividere la stringa delle istruzioni in un array
     procedureArray() {
       const procedure = this.recipe.instructions;
       return procedure ? procedure.split(". ") : [];
@@ -41,6 +43,7 @@ export default {
   },
 
   methods: {
+    //# TODO :funzione per aggiungere un commento
     addComment() {
       axios.post(api.comments).then(() => {});
     },

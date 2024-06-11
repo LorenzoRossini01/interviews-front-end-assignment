@@ -22,6 +22,7 @@ export default {
   },
 
   methods: {
+    // funzione per ottenere la lista delle ricette
     fetchRecipes() {
       axios.get(api.recipes).then((response) => {
         console.log(response);
@@ -29,24 +30,31 @@ export default {
       });
     },
 
+    // funzione per ottenere la lista dei commenti
     fetchComments() {
       axios.get(api.comments).then((response) => {
         console.log(response);
         this.comments = response.data;
       });
     },
+
+    // funzione per ottenere la lista delle tipologie di cucine
     fetchCuisines() {
       axios.get(api.cuisines).then((response) => {
         console.log(response);
         this.cuisines = response.data;
       });
     },
+
+    // funzione per ottenere la lista delle difficoltà
     fetchDifficulties() {
       axios.get(api.difficulties).then((response) => {
         console.log(response);
         this.difficulties = response.data;
       });
     },
+
+    // funzione per ottenere la lista dei tipi di dieta
     fetchDiets() {
       axios.get(api.diets).then((response) => {
         console.log(response);
@@ -54,6 +62,7 @@ export default {
       });
     },
 
+    // funzione per aprire e chiudere la card dei filtri
     handleFilterClick() {
       this.filtersActive = !this.filtersActive;
     },

@@ -30,18 +30,24 @@ export default {
   },
 
   computed: {
+    // variabile computata per ottenere l'url dell'immagine
     recipeImage() {
       return "../../assets/" + this.recipe.image;
     },
 
+    // variabile computata per ottenere il nome della categoria di cucina dall'Id
     cuisineName() {
       const cuisine = this.cuisines.find((c) => c.id === this.recipe.cuisineId);
       return cuisine ? "#" + cuisine.name : "Unknown";
     },
+
+    // variabile computata per ottenere il nome della tipologia di dieta dall'Id
     dietName() {
       const diet = this.diets.find((d) => d.id === this.recipe.dietId);
       return diet ? diet.name : "Unknown";
     },
+
+    // variabile computata per ottenere il nome della difficoltà dall'Id
     difficultyName() {
       const difficulty = this.difficulties.find(
         (d) => d.id === this.recipe.difficultyId
@@ -49,11 +55,14 @@ export default {
       return difficulty ? difficulty.name : "Unknown";
     },
 
+    // variabile computata per ottenere i commenti relativi alla ricetta corrente
     filteredComments() {
       return this.comments.filter(
         (comment) => comment.recipeId === this.recipe.id
       );
     },
+
+    // variabile computata per ottenere la media dei voti dalla lista dei commenti relativi alla ricetta corrente
     averageRating() {
       const ratings = this.filteredComments.map((comment) => comment.rating);
       if (ratings.length === 0) return 0;

@@ -34,12 +34,15 @@ export default {
   },
 
   methods: {
+    // funzione per recuperare i dettagli della ricetta
     fetchRecipeDetails() {
       axios.get(this.baseUrl).then((response) => {
         // console.log(response);
         this.recipe = response.data;
       });
     },
+
+    // funzione per recuperare i commenti collegati alla ricetta
     fetchComments() {
       axios.get(api.comments).then((response) => {
         response.data.forEach((comment) => {
@@ -50,6 +53,8 @@ export default {
         });
       });
     },
+
+    // funzione per recuperare le categorie di cucina della ricetta
     fetchCuisines() {
       axios.get(api.cuisines).then((response) => {
         response.data.forEach((cuisine) => {
@@ -60,6 +65,8 @@ export default {
         });
       });
     },
+
+    // funzione per recuperare le difficoltà della ricetta
     fetchDifficulties() {
       axios.get(api.difficulties).then((response) => {
         response.data.forEach((difficulty) => {
@@ -70,6 +77,8 @@ export default {
         });
       });
     },
+
+    // funzione per recuperare le tipologie di diete della ricetta
     fetchDiets() {
       axios.get(api.diets).then((response) => {
         response.data.forEach((diet) => {

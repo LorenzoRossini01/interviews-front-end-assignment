@@ -30,6 +30,7 @@ export default {
     },
   },
 
+  // emits per chiudere la card dei filtri
   emits: ["closeFilterCard"],
 
   methods: {

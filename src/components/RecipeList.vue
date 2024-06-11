@@ -38,6 +38,7 @@ export default {
       required: true,
     },
   },
+  // emit per aprire la card dei filtri
   emits: ["openFilterCard"],
   methods: {
     openFilterCard() {
