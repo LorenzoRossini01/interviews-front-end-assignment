@@ -12,7 +12,9 @@ export default {
 <template>
   <nav class="navbar bg-body-tertiary">
     <div class="container">
-      <a class="h2">RecipeBook</a>
+      <router-link :to="{ name: 'recipes.index' }" class="h2"
+        >RecipeBook</router-link
+      >
       <form class="d-flex" role="search">
         <input
           v-model="store.searchedTerm"
