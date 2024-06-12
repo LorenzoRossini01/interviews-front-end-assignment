@@ -535,6 +535,13 @@
       "comment": "Fresh and vibrant.",
       "rating": 4,
       "date": "2024-07-02T14:20:00.000Z"
+    },
+    {
+      "id": "51",
+      "recipeId": "2",
+      "comment": "buonissima",
+      "rating": 3,
+      "date": "2024-06-12 18:42:28"
     }
   ],
   "cuisines": [
