@@ -6,8 +6,8 @@ import RecipeCard from "./RecipeCard.vue";
 export default {
   data() {
     return {
-      hasBeenFiltered: true,
       selectedOrder: 0,
+      store,
     };
   },
 
@@ -58,7 +58,7 @@ export default {
 
 <template>
   <div class="top-list d-flex align-items-end mb-3">
-    <div class="title-container" v-if="hasBeenFiltered">
+    <div class="title-container" v-if="store.hasBeenFiltered">
       <p>Result for</p>
       <h2>Recipes found for your search criteria</h2>
     </div>

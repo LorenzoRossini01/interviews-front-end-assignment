@@ -4,7 +4,17 @@ export default {
   data() {
     return {
       store,
+      searchedTerm: "",
     };
+  },
+
+  emits: ["updateSearch"],
+
+  methods: {
+    submitSearch() {
+      // Emetti un evento per notificare il componente padre dell'aggiornamento della ricerca
+      this.$emit("updateSearch", this.searchedTerm);
+    },
   },
 };
 </script>
@@ -15,13 +25,14 @@ export default {
       <router-link :to="{ name: 'recipes.index' }" class="h2"
         >RecipeBook</router-link
       >
-      <form class="d-flex" role="search">
+      <form class="d-flex" role="search" @submit.prevent="submitSearch()">
         <input
-          v-model="store.searchedTerm"
+          v-model="searchedTerm"
           class="form-control me-2 rounded-pill"
           type="search"
           placeholder="Search for recipes"
           aria-label="Search"
+          @keyup.enter="submitSearch()"
         />
         <button class="btn btn-orange rounded-pill" type="submit">
           Search

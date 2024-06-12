@@ -7,6 +7,7 @@ import RecipeFilter from "./RecipeFilter.vue";
 export default {
   data() {
     return {
+      store,
       recipes: [],
       comments: [],
       cuisines: [],
@@ -16,9 +17,22 @@ export default {
 
       currentPage: 1, // Pagina corrente
       recipesPerPage: 4, // Numero di ricette per pagina
+      totalPages: 0,
 
       selectedOrder: 0,
+
+      searchedTerm: "",
+      selectedCuisine: "",
+      selectedDifficulty: "",
+      selectedDiet: "",
     };
+  },
+
+  props: {
+    HeadersearchedTerm: {
+      type: String,
+      required: true,
+    },
   },
 
   components: {
@@ -26,65 +40,79 @@ export default {
     RecipeFilter,
   },
 
-  computed: {
-    //Ordina l'array delle ricette in base al valore di selectedOrder
-    sortedRecipes() {
-      let sorted = [...this.recipes];
-
-      if (this.selectedOrder === 1) {
-        sorted.sort((a, b) => a.name.localeCompare(b.name));
-      }
-      if (this.selectedOrder === 2) {
-        sorted.sort((a, b) => b.name.localeCompare(a.name));
-      }
-
-      if (this.selectedOrder === 3) {
-        sorted.sort((a, b) => a.difficultyId - b.difficultyId);
-      }
-      if (this.selectedOrder === 4) {
-        sorted.sort((a, b) => b.difficultyId - a.difficultyId);
-      }
-
-      if (this.selectedOrder === 5) {
-        sorted.sort((a, b) => a.id - b.id);
-      }
-      if (this.selectedOrder === 6) {
-        sorted.sort((a, b) => b.id - a.id);
-      }
-
-      const start = (this.currentPage - 1) * this.recipesPerPage;
-      const end = start + this.recipesPerPage;
-      return sorted.slice(start, end);
-    },
-    // Calcola il numero totale di pagine
-    totalPages() {
-      return Math.ceil(this.recipes.length / this.recipesPerPage);
-    },
-  },
+  computed: {},
 
   methods: {
     fetchRecipes() {
-      axios.get(api.recipes).then((response) => {
-        // console.log(response.data);
-        this.recipes = response.data;
+      const url = api.recipes;
+      let params = {
+        q: this.searchedTerm ?? `${this.searchedTerm}`,
+        cuisineId: this.selectedCuisine ?? this.selectedCuisine,
+        dietId: this.selectedDiet ?? this.selectedDiet,
+        difficultyId: this.selectedDifficulty ?? this.selectedDifficulty,
+      };
+      // console.log(params);
+
+      // Rimuovi i parametri nulli o vuoti
+      Object.keys(params).forEach((key) => {
+        if (params[key] === null || params[key] === "") {
+          delete params[key];
+        }
+      });
+
+      axios.get(url, { params }).then((response) => {
+        // console.log(response);
+        let allRecipes = response.data;
+        if (this.selectedOrder === 1) {
+          allRecipes.sort((a, b) => a.name.localeCompare(b.name));
+        }
+        if (this.selectedOrder === 2) {
+          allRecipes.sort((a, b) => b.name.localeCompare(a.name));
+        }
+
+        if (this.selectedOrder === 3) {
+          allRecipes.sort((a, b) => a.difficultyId - b.difficultyId);
+        }
+        if (this.selectedOrder === 4) {
+          allRecipes.sort((a, b) => b.difficultyId - a.difficultyId);
+        }
+
+        if (this.selectedOrder === 5) {
+          allRecipes.sort((a, b) => a.id - b.id);
+        }
+        if (this.selectedOrder === 6) {
+          allRecipes.sort((a, b) => b.id - a.id);
+        }
+
+        // Calcola il numero totale di pagine
+        const totalRecipes = allRecipes.length;
+        this.totalPages = Math.ceil(totalRecipes / this.recipesPerPage);
+
+        // Applica la paginazione ai risultati ordinati
+        const start = (this.currentPage - 1) * this.recipesPerPage;
+        const end = start + this.recipesPerPage;
+        this.recipes = allRecipes.slice(start, end);
       });
     },
 
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
+        this.fetchRecipes();
       }
     },
     // Metodo per andare alla pagina precedente
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
+        this.fetchRecipes();
       }
     },
     // Metodo per andare a una pagina specifica
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
+        this.fetchRecipes();
       }
     },
 
@@ -120,6 +148,50 @@ export default {
     getSelectedOrder(value) {
       this.selectedOrder = value;
     },
+
+    getSelectedFilters(filters) {
+      // console.log(filters);
+      this.searchedTerm = filters[0];
+      this.selectedCuisine = filters[1];
+      this.selectedDifficulty = filters[2];
+      this.selectedDiet = filters[3];
+      if (
+        this.searchedTerm == null ||
+        this.selectedCuisine == null ||
+        this.selectedDifficulty == null ||
+        this.selectedDiet == null
+      ) {
+        store.hasBeenFiltered = false;
+      } else {
+        store.hasBeenFiltered = true;
+      }
+      this.fetchRecipes();
+    },
+  },
+
+  watch: {
+    // Watcher per rimettere alla prima pagina se l'ordine o i filtri cambiano
+    selectedOrder() {
+      this.currentPage = 1;
+      this.fetchRecipes();
+    },
+    selectedCuisine() {
+      this.currentPage = 1;
+      this.fetchRecipes();
+    },
+    selectedDiet() {
+      this.currentPage = 1;
+      this.fetchRecipes();
+    },
+    selectedDifficulty() {
+      this.currentPage = 1;
+      this.fetchRecipes();
+    },
+
+    HeadersearchedTerm(newTerm) {
+      this.searchedTerm = newTerm;
+      this.fetchRecipes();
+    },
   },
 
   created() {
@@ -128,6 +200,7 @@ export default {
     this.fetchCuisines();
     this.fetchDifficulties();
     this.fetchDiets();
+    store.hasBeenFiltered = false;
   },
 };
 </script>
@@ -137,7 +210,7 @@ export default {
     <div class="row justify-content-center g-3">
       <div :class="filtersActive ? 'col-8' : 'col-12'">
         <RecipeList
-          :recipes="sortedRecipes"
+          :recipes="recipes"
           :comments="comments"
           :cuisines="cuisines"
           :diets="diets"
@@ -146,7 +219,10 @@ export default {
           @openFilterCard="handleFilterClick()"
           @sendSelectedOrder="getSelectedOrder"
         />
-        <div class="pagination-container d-flex justify-content-end">
+        <div
+          class="pagination-container d-flex justify-content-end"
+          v-if="totalPages > 1"
+        >
           <div class="pagination">
             <button @click="previousPage" :disabled="currentPage === 1">
               Previous
@@ -176,6 +252,7 @@ export default {
           :difficulties="difficulties"
           v-if="filtersActive"
           @closeFilterCard="handleFilterClick()"
+          @selectFilters="getSelectedFilters"
         />
       </div>
     </div>

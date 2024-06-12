@@ -5,7 +5,9 @@ import AppFooter from "../components/AppFooter.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      searchedTerm: "",
+    };
   },
 
   components: {
@@ -13,12 +15,18 @@ export default {
     AppMainRecipePage,
     AppFooter,
   },
+
+  methods: {
+    updateSearchedTerm(searchedTerm) {
+      this.searchedTerm = searchedTerm;
+    },
+  },
 };
 </script>
 
 <template>
-  <AppHeader />
-  <AppMainRecipePage />
+  <AppHeader @updateSearch="updateSearchedTerm" />
+  <AppMainRecipePage :HeadersearchedTerm="searchedTerm" />
   <AppFooter />
 </template>
 
