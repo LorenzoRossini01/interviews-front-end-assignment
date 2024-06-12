@@ -65,9 +65,9 @@ export default {
 
         <div class="card my-3">
           <h5>Procedure</h5>
-          <ul>
+          <ol class="ps-3">
             <li v-for="step in procedureArray">{{ step }}</li>
-          </ul>
+          </ol>
         </div>
       </div>
       <div class="col-6 h-100">
@@ -112,7 +112,7 @@ export default {
             </span>
           </li>
         </ul>
-        <div
+        <form
           class="form-group d-flex flex-column justyfy-content-center align-items-end"
         >
           <input
@@ -121,10 +121,51 @@ export default {
             placeholder="Leave your review here"
           />
 
+          <div class="input-group d-flex align-items-center mt-3 ps-3">
+            <label for="rating">Rate Recipe</label>
+            <div class="rating ms-3">
+              <input type="radio" id="star5" name="rating" value="5" />
+              <label
+                class="star"
+                for="star5"
+                title="Awesome"
+                aria-hidden="true"
+              ></label>
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label
+                class="star"
+                for="star4"
+                title="Great"
+                aria-hidden="true"
+              ></label>
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label
+                class="star"
+                for="star3"
+                title="Very good"
+                aria-hidden="true"
+              ></label>
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label
+                class="star"
+                for="star2"
+                title="Good"
+                aria-hidden="true"
+              ></label>
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label
+                class="star"
+                for="star1"
+                title="Bad"
+                aria-hidden="true"
+              ></label>
+            </div>
+          </div>
+
           <button type="button" class="btn btn-orange mt-3 rounded-pill">
             Submit
           </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -177,6 +218,10 @@ ul {
         height: 100%;
       }
     }
+
+    .fa-star {
+      color: #f79426;
+    }
   }
 }
 
@@ -185,5 +230,40 @@ h5 {
 }
 p {
   margin-bottom: 0rem;
+}
+
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > label {
+  color: #90a0a3;
+  float: right;
+}
+
+.rating > label:before {
+  margin: 0.1rem;
+  font-size: 1rem;
+  font-family: FontAwesome;
+  content: "\f005";
+  display: inline-block;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #f79426;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+  color: #fece31;
 }
 </style>
