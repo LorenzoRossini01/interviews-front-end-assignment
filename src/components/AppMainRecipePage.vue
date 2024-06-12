@@ -220,9 +220,16 @@ export default {
           @sendSelectedOrder="getSelectedOrder"
         />
         <div
-          class="pagination-container d-flex justify-content-end"
+          class="pagination-container d-flex justify-content-between align-items-center"
           v-if="totalPages > 1"
         >
+          <router-link
+            :to="{ name: 'recipes.create' }"
+            class="btn btn-orange rounded-pill d-flex justify-content-center align-items-center"
+          >
+            <i class="fa-solid fa-plus me-3"></i>
+            Add Recipe
+          </router-link>
           <div class="pagination">
             <button @click="previousPage" :disabled="currentPage === 1">
               Previous
