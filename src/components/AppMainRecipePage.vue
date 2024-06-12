@@ -16,6 +16,8 @@ export default {
 
       currentPage: 1, // Pagina corrente
       recipesPerPage: 4, // Numero di ricette per pagina
+
+      selectedOrder: 0,
     };
   },
 
@@ -25,11 +27,34 @@ export default {
   },
 
   computed: {
-    // Calcola le ricette da visualizzare sulla pagina corrente
-    paginatedRecipes() {
+    //Ordina l'array delle ricette in base al valore di selectedOrder
+    sortedRecipes() {
+      let sorted = [...this.recipes];
+
+      if (this.selectedOrder === 1) {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      if (this.selectedOrder === 2) {
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
+      }
+
+      if (this.selectedOrder === 3) {
+        sorted.sort((a, b) => a.difficultyId - b.difficultyId);
+      }
+      if (this.selectedOrder === 4) {
+        sorted.sort((a, b) => b.difficultyId - a.difficultyId);
+      }
+
+      if (this.selectedOrder === 5) {
+        sorted.sort((a, b) => a.id - b.id);
+      }
+      if (this.selectedOrder === 6) {
+        sorted.sort((a, b) => b.id - a.id);
+      }
+
       const start = (this.currentPage - 1) * this.recipesPerPage;
       const end = start + this.recipesPerPage;
-      return this.recipes.slice(start, end);
+      return sorted.slice(start, end);
     },
     // Calcola il numero totale di pagine
     totalPages() {
@@ -91,6 +116,10 @@ export default {
     handleFilterClick() {
       this.filtersActive = !this.filtersActive;
     },
+
+    getSelectedOrder(value) {
+      this.selectedOrder = value;
+    },
   },
 
   created() {
@@ -108,13 +137,14 @@ export default {
     <div class="row justify-content-center g-3">
       <div :class="filtersActive ? 'col-8' : 'col-12'">
         <RecipeList
-          :recipes="paginatedRecipes"
+          :recipes="sortedRecipes"
           :comments="comments"
           :cuisines="cuisines"
           :diets="diets"
           :difficulties="difficulties"
           :filtersActive="filtersActive"
           @openFilterCard="handleFilterClick()"
+          @sendSelectedOrder="getSelectedOrder"
         />
         <div class="pagination-container d-flex justify-content-end">
           <div class="pagination">

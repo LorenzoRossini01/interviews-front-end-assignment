@@ -5,7 +5,10 @@ import RecipeCard from "./RecipeCard.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      hasBeenFiltered: true,
+      selectedOrder: 0,
+    };
   },
 
   components: {
@@ -38,10 +41,14 @@ export default {
       required: true,
     },
   },
-  emits: ["openFilterCard"],
+  emits: ["openFilterCard", "sendSelectedOrder"],
   methods: {
     openFilterCard() {
       this.$emit("openFilterCard");
+    },
+
+    sendSelectedOrder() {
+      this.$emit("sendSelectedOrder", this.selectedOrder);
     },
   },
 
@@ -51,12 +58,29 @@ export default {
 
 <template>
   <div class="top-list d-flex align-items-end mb-3">
-    <div class="title-container">
+    <div class="title-container" v-if="hasBeenFiltered">
       <p>Result for</p>
       <h2>Recipes found for your search criteria</h2>
     </div>
+    <div class="order-by ms-auto me-3">
+      <select
+        name="order-by"
+        id="order-by"
+        class="form-select rounded-pill ps-4 pe-5 py-2"
+        v-model="selectedOrder"
+        @change="sendSelectedOrder()"
+      >
+        <option :value="0" class="d-none">Order by</option>
+        <option :value="1">Name A-Z</option>
+        <option :value="2">Name Z-A</option>
+        <option :value="3">Difficulty Asc</option>
+        <option :value="4">Difficulty Desc</option>
+        <option :value="5">Date Asc</option>
+        <option :value="6">Date Desc</option>
+      </select>
+    </div>
     <div
-      class="btn btn-orange rounded-pill ms-auto"
+      class="btn btn-orange rounded-pill"
       v-if="!filtersActive"
       @click="openFilterCard()"
     >
@@ -74,4 +98,4 @@ export default {
   />
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
