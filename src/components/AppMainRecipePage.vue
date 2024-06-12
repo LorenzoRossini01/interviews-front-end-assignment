@@ -197,7 +197,7 @@ export default {
     cursor: pointer;
 
     &.active {
-      background-color: #333;
+      background-color: orangered;
       color: #fff;
     }
 
