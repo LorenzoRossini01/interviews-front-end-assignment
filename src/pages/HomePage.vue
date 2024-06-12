@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col">
         <img src="../assets/Recipe book.gif" alt="" />

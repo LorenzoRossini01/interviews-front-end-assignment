@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage.vue";
 
 import RecipePage from "./pages/RecipePage.vue";
 import RecipeDetailPage from "./pages/RecipeDetailPage.vue";
+import AddRecipePage from "./pages/AddRecipePage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -23,6 +24,11 @@ const router = createRouter({
       path: "/recipes/:id",
       name: "recipes.show",
       component: RecipeDetailPage,
+    },
+    {
+      path: "/recipes/add",
+      name: "recipes.create",
+      component: AddRecipePage,
     },
   ],
 });

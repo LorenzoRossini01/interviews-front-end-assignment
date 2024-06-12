@@ -11,4 +11,5 @@ export const api = {
 
 export const store = reactive({
   searchedTerm: "",
+  hasBeenFiltered: false,
 });

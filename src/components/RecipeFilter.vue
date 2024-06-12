@@ -4,6 +4,10 @@ export default {
   data() {
     return {
       store,
+
+      selectedCuisine: "",
+      selectedDifficulty: "",
+      selectedDiet: "",
     };
   },
 
@@ -31,11 +35,20 @@ export default {
   },
 
   // emits per chiudere la card dei filtri
-  emits: ["closeFilterCard"],
+  emits: ["closeFilterCard", "selectFilters"],
 
   methods: {
     closeFilterCard() {
       this.$emit("closeFilterCard");
+    },
+
+    selectFilters() {
+      this.$emit("selectFilters", [
+        store.searchedTerm,
+        this.selectedCuisine,
+        this.selectedDifficulty,
+        this.selectedDiet,
+      ]);
     },
   },
 };
@@ -49,7 +62,7 @@ export default {
         @click="closeFilterCard()"
       ></i>
       <h5 class="card-title">Discover recipes</h5>
-      <form action="" method="get">
+      <form action="" method="get" @submit.prevent="selectFilters()">
         <!-- recipe name  -->
         <label for="name" class="form-label mt-3 mb-0"> Search by name </label>
         <input
@@ -61,18 +74,21 @@ export default {
           placeholder="Search"
           aria-label="recipes name"
           aria-describedby="button-addon2"
+          @keyup.enter="selectFilters()"
         />
         <!-- recipe cuisine  -->
         <label for="cuisine" class="form-label mt-3 mb-0">
           Select cuisine
         </label>
         <select
+          v-model="selectedCuisine"
           id="cuisine"
           name="cuisine"
           class="form-select rounded-pill"
           aria-label="Default select example"
         >
-          <option selected class="d-none">Choose cuisine</option>
+          <option :value="0" class="d-none">Choose cuisine</option>
+          <option :value="null">None</option>
           <option :value="cuisine.id" v-for="cuisine in cuisines">
             {{ cuisine.name }}
           </option>
@@ -82,12 +98,15 @@ export default {
           Select difficulty
         </label>
         <select
+          v-model="selectedDifficulty"
           id="difficulty"
           name="difficulty"
           class="form-select rounded-pill"
           aria-label="Default select example"
         >
-          <option selected>Choose difficulty</option>
+          <option :value="0" class="d-none">Choose difficulty</option>
+          <option :value="null">None</option>
+
           <option :value="difficulty.id" v-for="difficulty in difficulties">
             {{ difficulty.name }}
           </option>
@@ -98,12 +117,15 @@ export default {
           Select diet
         </label>
         <select
+          v-model="selectedDiet"
           id="diet"
           name="diet"
           class="form-select rounded-pill"
           aria-label="Default select example"
         >
-          <option selected>Choose diet type</option>
+          <option :value="0" class="d-none">Choose diet type</option>
+          <option :value="null">None</option>
+
           <option :value="diet.id" v-for="diet in diets">
             {{ diet.name }}
           </option>
@@ -112,6 +134,7 @@ export default {
           type="submit"
           class="btn btn-orange rounded-pill mt-3"
           id="button-addon2"
+          @click="selectFilters()"
         >
           Search
         </button>
