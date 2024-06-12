@@ -93,7 +93,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <AppHeader />
     <AppMainRecipeDetail
       :recipe="recipe"
