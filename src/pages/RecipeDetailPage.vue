@@ -80,6 +80,61 @@ export default {
         });
       });
     },
+
+    postComment(commentData) {
+      const now = new Date();
+
+      // Formatta la data e l'ora nel formato desiderato "YYYY-MM-DD HH:mm:ss"
+      const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")} ${now
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now
+        .getSeconds()
+        .toString()
+        .padStart(2, "0")}`;
+
+      // Ottieni l'ultimo ID dalla lista dei commenti
+      const lastComment = this.comments[this.comments.length - 1];
+      const lastCommentId = lastComment ? lastComment.id : 0;
+
+      // Genera un nuovo ID incrementando l'ultimo ID di uno
+      const newCommentId = lastCommentId + 1;
+
+      console.log(commentData);
+      let newComment = {
+        id: newCommentId,
+        recipeId: this.recipeId,
+        comment: commentData.commentText,
+        rating: commentData.rating ? commentData.commentRating : 3,
+        date: formattedDate,
+      };
+      axios
+        .post(this.baseUrl + "/comments", newComment)
+        .then((response) => {
+          console.log("Comment posted successfully:", response.data);
+          this.comments = [];
+          this.fetchComments();
+        })
+        .catch((error) => {
+          console.error("Error posting comment:", error);
+        });
+    },
+
+    deleteComment(comment) {
+      axios
+        .delete(`${api.comments}/${comment.id}`)
+        .then(() => {
+          console.log("Comment deleted successfully");
+          this.comments = [];
+
+          this.fetchComments();
+        })
+        .catch((error) => {
+          console.error("Error deleting comment:", error);
+        });
+    },
   },
 
   created() {
@@ -101,6 +156,8 @@ export default {
       :cuisines="cuisines"
       :difficulties="difficulties"
       :diets="diets"
+      @addComment="postComment"
+      @deleteComment="deleteComment"
     />
     <AppFooter />
   </div>

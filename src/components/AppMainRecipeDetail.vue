@@ -3,7 +3,12 @@ import axios from "axios";
 import { store, api } from "../store/index";
 export default {
   data() {
-    return {};
+    return {
+      commentData: {
+        commentText: "",
+        commentRating: null,
+      },
+    };
   },
 
   props: {
@@ -40,9 +45,19 @@ export default {
     },
   },
 
+  emits: ["addComment", "deleteComment"],
+
   methods: {
-    addComment() {
-      axios.post(api.comments).then(() => {});
+    postComment() {
+      this.$emit("addComment", this.commentData);
+      this.commentData = {
+        commentText: "",
+        commentRating: null,
+      };
+    },
+
+    deleteComment(comment) {
+      this.$emit("deleteComment", comment);
     },
   },
 };
@@ -110,6 +125,12 @@ export default {
               </p>
               <p>{{ comment.comment }}</p>
             </span>
+            <span class="ms-auto me-3 delete-comment">
+              <i
+                class="fa-solid fa-trash-alt fa-sm p-3"
+                @click="deleteComment(comment)"
+              ></i>
+            </span>
           </li>
         </ul>
         <form
@@ -119,40 +140,71 @@ export default {
             type="text"
             class="form-control rounded-pill"
             placeholder="Leave your review here"
+            v-model="commentData.commentText"
           />
 
           <div class="input-group d-flex align-items-center mt-3 ps-3">
-            <label for="rating">Rate Recipe</label>
+            <label>Rate Recipe</label>
             <div class="rating ms-3">
-              <input type="radio" id="star5" name="rating" value="5" />
+              <input
+                type="radio"
+                id="star5"
+                name="rating"
+                value="5"
+                v-model="commentData.commentRating"
+              />
               <label
                 class="star"
                 for="star5"
                 title="Awesome"
                 aria-hidden="true"
               ></label>
-              <input type="radio" id="star4" name="rating" value="4" />
+              <input
+                type="radio"
+                id="star4"
+                name="rating"
+                value="4"
+                v-model="commentData.commentRating"
+              />
               <label
                 class="star"
                 for="star4"
                 title="Great"
                 aria-hidden="true"
               ></label>
-              <input type="radio" id="star3" name="rating" value="3" />
+              <input
+                type="radio"
+                id="star3"
+                name="rating"
+                value="3"
+                v-model="commentData.commentRating"
+              />
               <label
                 class="star"
                 for="star3"
                 title="Very good"
                 aria-hidden="true"
               ></label>
-              <input type="radio" id="star2" name="rating" value="2" />
+              <input
+                type="radio"
+                id="star2"
+                name="rating"
+                value="2"
+                v-model="commentData.commentRating"
+              />
               <label
                 class="star"
                 for="star2"
                 title="Good"
                 aria-hidden="true"
               ></label>
-              <input type="radio" id="star1" name="rating" value="1" />
+              <input
+                type="radio"
+                id="star1"
+                name="rating"
+                value="1"
+                v-model="commentData.commentRating"
+              />
               <label
                 class="star"
                 for="star1"
@@ -162,7 +214,11 @@ export default {
             </div>
           </div>
 
-          <button type="button" class="btn btn-orange mt-3 rounded-pill">
+          <button
+            type="button"
+            class="btn btn-orange mt-3 rounded-pill"
+            @click="postComment()"
+          >
             Submit
           </button>
         </form>
@@ -207,8 +263,32 @@ ul {
 .review-list {
   list-style-type: none;
   padding-left: 0;
+  max-height: 300px;
+  overflow-y: auto;
   li {
-    margin-block: 1rem;
+    padding-block: 1rem;
+    padding-inline: 1rem;
+    border-bottom: 1px solid gray;
+    &:hover {
+      background-color: #f6f6f6;
+    }
+    .delete-comment {
+      width: 50px;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      &:hover {
+        i {
+          color: orangered;
+          scale: 1.5;
+        }
+      }
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
 
     .img-wrapper {
       height: 75px;
