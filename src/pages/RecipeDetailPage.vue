@@ -11,6 +11,7 @@ export default {
     return {
       recipe: {},
       comments: [],
+      allComments: [],
       cuisines: [],
       difficulties: [],
       diets: [],
@@ -43,6 +44,7 @@ export default {
     fetchComments() {
       axios.get(api.comments).then((response) => {
         response.data.forEach((comment) => {
+          this.allComments.push(comment);
           if (comment.recipeId == this.recipeId) {
             // console.log(comment);
             this.comments.push(comment);
@@ -95,12 +97,13 @@ export default {
         .toString()
         .padStart(2, "0")}`;
 
-      // Ottieni l'ultimo ID dalla lista dei commenti
-      const lastComment = this.comments[this.comments.length - 1];
+      const lastComment = this.allComments[this.allComments.length - 1];
       const lastCommentId = lastComment ? lastComment.id : 0;
 
+      console.log(lastCommentId);
       // Genera un nuovo ID incrementando l'ultimo ID di uno
-      const newCommentId = lastCommentId + 1;
+      const newCommentId = parseInt(lastCommentId) + 1;
+      console.log(newCommentId);
 
       console.log(commentData);
       let newComment = {
