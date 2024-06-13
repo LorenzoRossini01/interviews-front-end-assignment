@@ -19,3 +19,11 @@ a {
     border: 1px solid orangered;
   }
 }
+
+footer {
+  height: 150px;
+}
+
+main {
+  min-height: calc(100vh - 150px - 80px);
+}

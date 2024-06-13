@@ -101,4 +101,43 @@ comments.
 
 ## How to run
 
-...
+### Frontend
+
+1.  **Install Dependencies**
+    Ensure you have Node.js and npm installed on your system. Then, install the frontend dependencies:
+    ```bash
+    npm install
+    ```
+2.  **Start the Application**
+    After installing the dependencies, start the frontend application:
+
+    ```bash
+    npm run dev
+    ```
+
+    This command launches the frontend in development mode.
+
+### Backend
+
+1.  **Navigate to the Server Directory**
+    Make sure you are in the server directory:
+
+    ```bash
+    cd server
+    ```
+
+2.  **Install Dependencies**
+    Install the necessary dependencies for the server:
+
+    ```bash
+    npm install
+    ```
+
+3.  **Start the Server**
+    Launch the server:
+
+    ```bash
+    npm start
+    ```
+
+    The server will be running at http://localhost:8080, where 8080 is the port specified in the configuration file.

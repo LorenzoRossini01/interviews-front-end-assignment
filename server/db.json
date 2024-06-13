@@ -351,6 +351,19 @@
       "dietId": "3",
       "difficultyId": "1",
       "image": "/uploads/Pasta-Primavera-f.jpg"
+    },
+    {
+      "id": "1718292242499",
+      "name": "dasdasd",
+      "ingredients": [
+        "sadasad",
+        "dasdas"
+      ],
+      "instructions": "asdasd. dsdadas. asda",
+      "cuisineId": "3",
+      "dietId": "4",
+      "difficultyId": "3",
+      "image": "/uploads/1718292242491.png"
     }
   ],
   "comments": [
@@ -542,6 +555,13 @@
       "comment": "buonissima",
       "rating": 3,
       "date": "2024-06-12 18:42:28"
+    },
+    {
+      "id": 52,
+      "recipeId": "3",
+      "comment": "buonissimo",
+      "rating": 3,
+      "date": "2024-06-12 19:54:08"
     }
   ],
   "cuisines": [

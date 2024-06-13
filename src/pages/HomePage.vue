@@ -15,8 +15,10 @@ export default {
       <div class="col text-center">
         <h1>RecipeBook</h1>
         <p>Discover Recipes</p>
+
+        <!-- Router link per navigare alla pagina delle ricette con pagina 1 come parametro -->
         <router-link
-          :to="{ name: 'recipes.index' }"
+          :to="{ name: 'recipes.index', params: { page: 1 } }"
           class="btn btn-orange rounded-pill"
           >Explore</router-link
         >
@@ -26,7 +28,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.container {
+.container-fluid {
   height: 100vh;
   .row {
     height: 100%;

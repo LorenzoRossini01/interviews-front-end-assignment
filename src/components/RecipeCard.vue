@@ -1,11 +1,15 @@
 <script>
+// Importa lo store per gestire lo stato globale
 import { store } from "../store/index";
+
 export default {
   data() {
     return {
-      store,
+      store, // Stato globale dell'applicazione
     };
   },
+
+  // Props passate al componente
   props: {
     recipe: {
       type: Object,
@@ -27,27 +31,31 @@ export default {
       type: Array,
       required: true,
     },
+    currentPage: {
+      type: Number,
+      required: true,
+    },
   },
 
   computed: {
-    // variabile computata per ottenere l'url dell'immagine
+    // Restituisce l'URL completo dell'immagine della ricetta
     recipeImage() {
-      return "../../assets/" + this.recipe.image;
+      return "http://localhost:8080" + this.recipe.image;
     },
 
-    // variabile computata per ottenere il nome della categoria di cucina dall'Id
+    // Restituisce il nome della cucina associata alla ricetta
     cuisineName() {
       const cuisine = this.cuisines.find((c) => c.id === this.recipe.cuisineId);
       return cuisine ? "#" + cuisine.name : "Unknown";
     },
 
-    // variabile computata per ottenere il nome della tipologia di dieta dall'Id
+    // Restituisce il nome della dieta associata alla ricetta
     dietName() {
       const diet = this.diets.find((d) => d.id === this.recipe.dietId);
       return diet ? diet.name : "Unknown";
     },
 
-    // variabile computata per ottenere il nome della difficoltà dall'Id
+    // Restituisce il nome della difficoltà associata alla ricetta
     difficultyName() {
       const difficulty = this.difficulties.find(
         (d) => d.id === this.recipe.difficultyId
@@ -55,14 +63,14 @@ export default {
       return difficulty ? difficulty.name : "Unknown";
     },
 
-    // variabile computata per ottenere i commenti relativi alla ricetta corrente
+    // Filtra i commenti associati alla ricetta corrente
     filteredComments() {
       return this.comments.filter(
         (comment) => comment.recipeId === this.recipe.id
       );
     },
 
-    // variabile computata per ottenere la media dei voti dalla lista dei commenti relativi alla ricetta corrente
+    // Calcola la valutazione media dei commenti
     averageRating() {
       const ratings = this.filteredComments.map((comment) => comment.rating);
       if (ratings.length === 0) return 0;
@@ -70,18 +78,20 @@ export default {
       return (sum / ratings.length).toFixed(1);
     },
   },
-  methods: {},
 };
 </script>
 
 <template>
   <div class="card">
     <div class="row g-2 d-flex">
+      <!-- Colonna per l'immagine della ricetta -->
       <div class="col">
         <div class="img-wrapper">
           <img class="card-img-top" :src="recipeImage" :alt="recipe.name" />
         </div>
       </div>
+
+      <!-- Colonna per i dettagli della ricetta  -->
       <div class="col">
         <div class="detail-wrapper">
           <h3 class="h5">{{ recipe.name }}</h3>
@@ -94,6 +104,8 @@ export default {
           </span>
         </div>
       </div>
+
+      <!-- colonna per altre informazioni della ricetta e link al dettaglio  -->
       <div class="col ms-auto">
         <div class="control-wrapper">
           <span><strong>Difficulty: </strong>{{ difficultyName }}</span>
@@ -113,7 +125,10 @@ export default {
             </span>
           </div>
           <router-link
-            :to="{ name: 'recipes.show', params: { id: recipe.id } }"
+            :to="{
+              name: 'recipes.show',
+              params: { id: recipe.id, page: currentPage },
+            }"
             class="btn btn-orange rounded-pill mt-auto"
             >View Details</router-link
           >

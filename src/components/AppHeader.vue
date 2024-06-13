@@ -1,19 +1,36 @@
 <script>
+// Importazione delle dipendenze e oggetti necessari
 import { store, api } from "../store/index";
+
 export default {
   data() {
     return {
-      store,
-      searchedTerm: "",
+      store, // Accesso allo store globale (presumibilmente Vuex)
+      searchedTerm: "", // Termine di ricerca per le ricette in input dall'utente
     };
   },
 
+  // Eventi emessi dal componente (per comunicare con il componente genitore)
   emits: ["updateSearch"],
 
   methods: {
+    // Metodo chiamato quando l'utente invia il form di ricerca
     submitSearch() {
       // Emetti un evento per notificare il componente padre dell'aggiornamento della ricerca
       this.$emit("updateSearch", this.searchedTerm);
+
+      // Aggiorna lo stato globale per indicare se è stata applicata una ricerca
+      if (this.searchedTerm) {
+        store.hasBeenFiltered = true;
+      } else {
+        store.hasBeenFiltered = false;
+      }
+
+      // Naviga alla pagina delle ricette con il parametro di query per il termine di ricerca
+      this.$router.push({
+        name: "recipes.index",
+        query: { q: this.searchedTerm },
+      });
     },
   },
 };
@@ -22,7 +39,9 @@ export default {
 <template>
   <nav class="navbar bg-body-tertiary">
     <div class="container">
-      <router-link :to="{ name: 'recipes.index' }" class="h2"
+      <router-link
+        :to="{ name: 'recipes.index', props: { page: 1 } }"
+        class="h2"
         >RecipeBook</router-link
       >
       <form class="d-flex" role="search" @submit.prevent="submitSearch()">
