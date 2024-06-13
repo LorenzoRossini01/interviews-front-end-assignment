@@ -364,6 +364,19 @@
       "dietId": "4",
       "difficultyId": "3",
       "image": "/uploads/1718292242491.png"
+    },
+    {
+      "id": "1718306332882",
+      "name": "polpette",
+      "ingredients": [
+        "carne",
+        "pangrattato"
+      ],
+      "instructions": "step 1 . step 2",
+      "cuisineId": "1",
+      "dietId": "3",
+      "difficultyId": "2",
+      "image": "/uploads/1718306332844.png"
     }
   ],
   "comments": [
@@ -569,6 +582,13 @@
       "comment": "buona questa pizza",
       "rating": 3,
       "date": "2024-06-13 18:49:11"
+    },
+    {
+      "id": 54,
+      "recipeId": "1718306332882",
+      "comment": "buonissime",
+      "rating": 3,
+      "date": "2024-06-13 21:19:08"
     }
   ],
   "cuisines": [

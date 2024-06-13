@@ -91,9 +91,9 @@ export default {
       <div class="recipe-img-wrapper recipe">
         <img :src="recipeImage" alt="" />
       </div>
-      <div class="row g-2 g-md-3 g-lg-4 mt-5">
+      <div class="row d-flex flex-lg-row g-2 g-md-3 g-lg-4 mt-5">
         <!-- Sezione degli ingredienti e della procedura -->
-        <div class="col-6 h-100">
+        <div class="col-md-6 h-100 order-2 order-md-1">
           <div class="card">
             <h5 class="">Ingredients</h5>
             <ul>
@@ -110,7 +110,7 @@ export default {
         </div>
 
         <!-- Sezione delle cucine, difficoltà e diete -->
-        <div class="col-6 h-100">
+        <div class="col-md-6 order-1 order-md-2 h-100 my-2">
           <div class="card">
             <h5 class="card-title">Cuisine</h5>
             <ul>
@@ -132,7 +132,7 @@ export default {
         </div>
 
         <!-- Sezione dei commenti degli utenti -->
-        <div class="card my-3">
+        <div class="card my-3 order-3">
           <h5>User Review</h5>
           <ul class="review-list">
             <li
