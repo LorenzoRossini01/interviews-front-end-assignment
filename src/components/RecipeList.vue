@@ -40,6 +40,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    currentPage: {
+      type: Number,
+      required: true,
+    },
   },
   emits: ["openFilterCard", "sendSelectedOrder"],
   methods: {
@@ -111,6 +115,7 @@ export default {
     :diets="diets"
     :difficulties="difficulties"
     :key="recipe.id"
+    :currentPage="currentPage"
   />
 </template>
 

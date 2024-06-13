@@ -106,7 +106,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.$router.push({ name: "recipes.index" });
+          this.$router.push({ name: "recipes.index", params: { page: 1 } });
         })
         .catch((error) => {
           console.log(error);

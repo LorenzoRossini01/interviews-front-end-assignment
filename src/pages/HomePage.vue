@@ -16,7 +16,7 @@ export default {
         <h1>RecipeBook</h1>
         <p>Discover Recipes</p>
         <router-link
-          :to="{ name: 'recipes.index' }"
+          :to="{ name: 'recipes.index', params: { page: 1 } }"
           class="btn btn-orange rounded-pill"
           >Explore</router-link
         >

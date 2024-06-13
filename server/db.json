@@ -366,6 +366,21 @@
       "dietId": "3",
       "difficultyId": "3",
       "image": "/uploads/1718274544818.jpg"
+    },
+    {
+      "id": "1718286652946",
+      "name": "Macedonia di frutta",
+      "ingredients": [
+        "kiwi",
+        "pesca",
+        "ananas",
+        "fragole"
+      ],
+      "instructions": "taglia tutta la frutta a cubetti. mescola la frutta tagliata in un contenitore capiente",
+      "cuisineId": "1",
+      "dietId": "1",
+      "difficultyId": "1",
+      "image": "/uploads/1718286652930.png"
     }
   ],
   "comments": [
@@ -564,6 +579,13 @@
       "comment": "buonissimo",
       "rating": 3,
       "date": "2024-06-12 19:54:08"
+    },
+    {
+      "id": 53,
+      "recipeId": "1718286652946",
+      "comment": "molto facile e molto buona, la rifarò",
+      "rating": 3,
+      "date": "2024-06-13 15:51:22"
     }
   ],
   "cuisines": [

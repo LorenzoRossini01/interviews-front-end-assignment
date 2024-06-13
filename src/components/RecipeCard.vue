@@ -27,6 +27,10 @@ export default {
       type: Array,
       required: true,
     },
+    currentPage: {
+      type: Number,
+      required: true,
+    },
   },
 
   computed: {
@@ -104,7 +108,10 @@ export default {
             </span>
           </div>
           <router-link
-            :to="{ name: 'recipes.show', params: { id: recipe.id } }"
+            :to="{
+              name: 'recipes.show',
+              params: { id: recipe.id, page: currentPage },
+            }"
             class="btn btn-orange rounded-pill mt-auto"
             >View Details</router-link
           >

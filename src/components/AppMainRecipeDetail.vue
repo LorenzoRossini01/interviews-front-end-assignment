@@ -8,6 +8,7 @@ export default {
         commentText: "",
         commentRating: null,
       },
+      recipeIndexPage: parseInt(this.$route.params.page),
     };
   },
 
@@ -59,6 +60,17 @@ export default {
     deleteComment(comment) {
       this.$emit("deleteComment", comment);
     },
+
+    goBack() {
+      this.$router.push({
+        name: "recipes.index",
+        params: { page: this.recipeIndexPage },
+      });
+    },
+  },
+
+  created() {
+    console.log(this.recipeIndexPage);
   },
 };
 </script>
@@ -66,7 +78,13 @@ export default {
 <template>
   <main>
     <div class="container">
-      <h1>{{ recipe.name }}</h1>
+      <div class="title d-flex justify-content-between align-items-center">
+        <h1>{{ recipe.name }}</h1>
+        <a @click.native.prevent="goBack" href="" class="text-dark">
+          <i class="fa-solid fa-arrow-left"></i>
+          Back to List
+        </a>
+      </div>
       <div class="recipe-img-wrapper recipe">
         <img :src="recipeImage" alt="" />
       </div>

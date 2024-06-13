@@ -15,7 +15,9 @@ export default {
       diets: [],
       filtersActive: false,
 
-      currentPage: 1, // Pagina corrente
+      currentPage: this.$route.params.page
+        ? parseInt(this.$route.params.page)
+        : 1, // Pagina corrente
       recipesPerPage: 4, // Numero di ricette per pagina
       totalPages: 0,
 
@@ -92,6 +94,8 @@ export default {
         const start = (this.currentPage - 1) * this.recipesPerPage;
         const end = start + this.recipesPerPage;
         this.recipes = allRecipes.slice(start, end);
+        // Aggiorna l'URL con il numero di pagina corrente
+        this.updateRoute();
       });
     },
 
@@ -167,6 +171,14 @@ export default {
       }
       this.fetchRecipes();
     },
+
+    // Metodo per aggiornare l'URL con il numero di pagina corrente
+    updateRoute() {
+      this.$router.replace({
+        path: this.$route.path,
+        query: { ...this.$route.params, page: this.currentPage },
+      });
+    },
   },
 
   watch: {
@@ -201,6 +213,7 @@ export default {
     this.fetchDifficulties();
     this.fetchDiets();
     store.hasBeenFiltered = false;
+    this.updateRoute();
   },
 };
 </script>
@@ -217,6 +230,7 @@ export default {
             :diets="diets"
             :difficulties="difficulties"
             :filtersActive="filtersActive"
+            :currentPage="currentPage"
             @openFilterCard="handleFilterClick()"
             @sendSelectedOrder="getSelectedOrder"
           />
@@ -224,7 +238,12 @@ export default {
             class="pagination-container d-flex justify-content-between align-items-center"
           >
             <router-link
-              :to="{ name: 'recipes.create' }"
+              :to="{
+                name: 'recipes.create',
+                params: {
+                  page: currentPage,
+                },
+              }"
               class="btn btn-orange rounded-pill d-flex justify-content-center align-items-center"
             >
               <i class="fa-solid fa-plus me-3"></i>

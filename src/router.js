@@ -16,17 +16,17 @@ const router = createRouter({
     },
 
     {
-      path: "/recipes",
+      path: "/recipes/:page",
       name: "recipes.index",
       component: RecipePage,
     },
     {
-      path: "/recipes/:id",
+      path: "/recipes/:id/:page",
       name: "recipes.show",
       component: RecipeDetailPage,
     },
     {
-      path: "/recipes/add",
+      path: "/recipes/add/:page",
       name: "recipes.create",
       component: AddRecipePage,
     },
