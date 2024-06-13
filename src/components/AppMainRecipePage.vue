@@ -1,35 +1,40 @@
 <script>
+// Importa axios e altre risorse necessarie
 import axios from "axios";
 import { store, api } from "../store/index";
+
+// Importa i componenti necessari
 import RecipeList from "./RecipeList.vue";
 import RecipeFilter from "./RecipeFilter.vue";
 
 export default {
   data() {
     return {
-      store,
-      recipes: [],
-      comments: [],
-      cuisines: [],
-      difficulties: [],
-      diets: [],
-      filtersActive: false,
+      store, // Stato globale dell'applicazione
+      recipes: [], // Lista delle ricette
+      comments: [], // Lista dei commenti
+      cuisines: [], // Lista delle cucine
+      difficulties: [], // Lista delle difficoltà
+      diets: [], // Lista delle diete
+      filtersActive: false, // Stato dei filtri (attivi o no)
 
+      // Pagina corrente, impostata inizialmente dai parametri della route
       currentPage: this.$route.params.page
         ? parseInt(this.$route.params.page)
         : 1, // Pagina corrente
+
       recipesPerPage: 4, // Numero di ricette per pagina
-      totalPages: 0,
+      totalPages: 0, // Numero totale di pagine
 
-      selectedOrder: 0,
-
-      searchedTerm: this.$route.query.q ? this.$route.query.q : "",
-      selectedCuisine: "",
-      selectedDifficulty: "",
-      selectedDiet: "",
+      selectedOrder: 0, // Ordine selezionato
+      searchedTerm: this.$route.query.q ? this.$route.query.q : "", // Termini di ricerca
+      selectedCuisine: "", // Cucina selezionata
+      selectedDifficulty: "", // Difficoltà selezionata
+      selectedDiet: "", // Dieta selezionata
     };
   },
 
+  // Props passate al componente
   props: {
     HeadersearchedTerm: {
       type: String,
@@ -45,6 +50,7 @@ export default {
   computed: {},
 
   methods: {
+    // Metodo per recuperare le ricette dall'API
     fetchRecipes() {
       const url = api.recipes;
       let params = {
@@ -55,7 +61,7 @@ export default {
       };
       // console.log(params);
 
-      // Rimuovi i parametri nulli o vuoti
+      // Rimuove i parametri nulli o vuoti
       Object.keys(params).forEach((key) => {
         if (params[key] === null || params[key] === "") {
           delete params[key];
@@ -65,26 +71,23 @@ export default {
       axios.get(url, { params }).then((response) => {
         // console.log(response);
         let allRecipes = response.data;
+
+        // Ordina le ricette in base all'ordine selezionato
         if (this.selectedOrder === 1) {
           allRecipes.sort((a, b) => a.name.localeCompare(b.name));
         }
-        if (this.selectedOrder === 2) {
+        if (this.selectedOrder === 2)
           allRecipes.sort((a, b) => b.name.localeCompare(a.name));
-        }
 
-        if (this.selectedOrder === 3) {
+        if (this.selectedOrder === 3)
           allRecipes.sort((a, b) => a.difficultyId - b.difficultyId);
-        }
-        if (this.selectedOrder === 4) {
-          allRecipes.sort((a, b) => b.difficultyId - a.difficultyId);
-        }
 
-        if (this.selectedOrder === 5) {
-          allRecipes.sort((a, b) => a.id - b.id);
-        }
-        if (this.selectedOrder === 6) {
-          allRecipes.sort((a, b) => b.id - a.id);
-        }
+        if (this.selectedOrder === 4)
+          allRecipes.sort((a, b) => b.difficultyId - a.difficultyId);
+
+        if (this.selectedOrder === 5) allRecipes.sort((a, b) => a.id - b.id);
+
+        if (this.selectedOrder === 6) allRecipes.sort((a, b) => b.id - a.id);
 
         // Calcola il numero totale di pagine
         const totalRecipes = allRecipes.length;
@@ -94,17 +97,20 @@ export default {
         const start = (this.currentPage - 1) * this.recipesPerPage;
         const end = start + this.recipesPerPage;
         this.recipes = allRecipes.slice(start, end);
+
         // Aggiorna l'URL con il numero di pagina corrente
         this.updateRoute();
       });
     },
 
+    // Metodo per andare alla pagina successiva
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
         this.fetchRecipes();
       }
     },
+
     // Metodo per andare alla pagina precedente
     previousPage() {
       if (this.currentPage > 1) {
@@ -112,6 +118,7 @@ export default {
         this.fetchRecipes();
       }
     },
+
     // Metodo per andare a una pagina specifica
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
@@ -120,24 +127,31 @@ export default {
       }
     },
 
+    // Metodo per recuperare i commenti dall'API
     fetchComments() {
       axios.get(api.comments).then((response) => {
         // console.log(response);
         this.comments = response.data;
       });
     },
+
+    // Metodo per recuperare le cucine dall'API
     fetchCuisines() {
       axios.get(api.cuisines).then((response) => {
         // console.log(response);
         this.cuisines = response.data;
       });
     },
+
+    // Metodo per recuperare le difficoltà dall'API
     fetchDifficulties() {
       axios.get(api.difficulties).then((response) => {
         // console.log(response);
         this.difficulties = response.data;
       });
     },
+
+    // Metodo per recuperare le diete dall'API
     fetchDiets() {
       axios.get(api.diets).then((response) => {
         // console.log(response);
@@ -145,14 +159,17 @@ export default {
       });
     },
 
+    // Metodo per gestire l'apertura della card per i filtri
     handleFilterClick() {
       this.filtersActive = !this.filtersActive;
     },
 
+    // Metodo per ottenere l'ordinamento selezionato
     getSelectedOrder(value) {
       this.selectedOrder = value;
     },
 
+    // Metodo per ottenere i filtri selezionati
     getSelectedFilters(filters) {
       // console.log(filters);
       this.searchedTerm = filters[0];
@@ -200,6 +217,7 @@ export default {
       this.fetchRecipes();
     },
 
+    // Watcher per il termine di ricerca nella header
     HeadersearchedTerm(newTerm) {
       this.searchedTerm = newTerm;
       this.fetchRecipes();

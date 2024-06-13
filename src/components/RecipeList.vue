@@ -1,4 +1,5 @@
 <script>
+// Importa axios e altre risorse necessarie
 import axios from "axios";
 import { store, api } from "../store/index";
 import RecipeCard from "./RecipeCard.vue";
@@ -6,15 +7,16 @@ import RecipeCard from "./RecipeCard.vue";
 export default {
   data() {
     return {
-      selectedOrder: 0,
-      store,
+      selectedOrder: 0, // Stato per l'ordine selezionato
+      store, // Stato globale dell'applicazione
     };
   },
 
   components: {
-    RecipeCard,
+    RecipeCard, // Componente per visualizzare una singola scheda di ricetta
   },
 
+  // props passate al componente
   props: {
     recipes: {
       type: Array,
@@ -45,24 +47,27 @@ export default {
       required: true,
     },
   },
-  emits: ["openFilterCard", "sendSelectedOrder"],
+
+  emits: ["openFilterCard", "sendSelectedOrder"], // Eventi emessi dal componente
+
   methods: {
+    // Metodo per aprire il pannello dei filtri
     openFilterCard() {
       this.$emit("openFilterCard");
     },
 
+    // Metodo per inviare l'ordine selezionato al componente genitore
     sendSelectedOrder() {
       this.$emit("sendSelectedOrder", this.selectedOrder);
     },
   },
-
-  created() {},
 };
 </script>
 
 <template>
   <div class="top-list d-flex align-items-end mb-3">
     <div class="title">
+      <!-- Titolo per i risultati filtrati -->
       <div
         class="title-container"
         v-if="store.hasBeenFiltered && recipes.length != 0"
@@ -70,10 +75,14 @@ export default {
         <p>Result for</p>
         <h2>Recipes found for your search criteria</h2>
       </div>
+
+      <!-- Titolo per nessun risultato trovato -->
       <div class="title-container" v-if="recipes.length == 0">
         <p>Result for</p>
         <h2>No recipes found for your search criteria</h2>
       </div>
+
+      <!-- Titolo per l'elenco completo delle ricette -->
       <div
         class="title-container"
         v-if="!store.hasBeenFiltered && recipes.length != 0"
@@ -82,6 +91,7 @@ export default {
         <h2>Recipe List</h2>
       </div>
     </div>
+    <!-- Selettore per ordinare le ricette -->
     <div class="order-by ms-auto me-3">
       <select
         name="order-by"
@@ -99,6 +109,8 @@ export default {
         <option :value="6">Date Desc</option>
       </select>
     </div>
+
+    <!-- Bottone per aprire il pannello dei filtri -->
     <div
       class="btn btn-orange rounded-pill"
       v-if="!filtersActive"
@@ -107,6 +119,9 @@ export default {
       Filter
     </div>
   </div>
+
+  <!-- Iterazione per ogni ricetta e rendering del componente RecipeCard -->
+  <!-- Passaggio props al componente figlio  -->
   <RecipeCard
     v-for="recipe of recipes"
     :recipe="recipe"

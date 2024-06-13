@@ -1,16 +1,19 @@
 <script>
+// Importa lo store per gestire lo stato globale
 import { store } from "../store/index";
+
 export default {
   data() {
     return {
-      store,
+      store, // Stato globale dell'applicazione
 
-      selectedCuisine: "",
-      selectedDifficulty: "",
-      selectedDiet: "",
+      selectedCuisine: "", // Stato per la cucina selezionata
+      selectedDifficulty: "", // Stato per la difficoltà selezionata
+      selectedDiet: "", // Stato per la dieta selezionata
     };
   },
 
+  // Props passate al componente
   props: {
     recipes: {
       type: Array,
@@ -34,13 +37,15 @@ export default {
     },
   },
 
-  emits: ["closeFilterCard", "selectFilters"],
+  emits: ["closeFilterCard", "selectFilters"], // Eventi emessi dal componente
 
   methods: {
+    // Metodo per chiudere il pannello dei filtri
     closeFilterCard() {
       this.$emit("closeFilterCard");
     },
 
+    // Metodo per applicare i filtri selezionati
     selectFilters() {
       this.$emit("selectFilters", [
         store.searchedTerm,
@@ -56,13 +61,14 @@ export default {
 <template>
   <div class="card">
     <div class="card-body">
+      <!-- Icona per chiudere il pannello dei filtri -->
       <i
         class="fa-solid fa-arrow-left-long fa-lg mb-3"
         @click="closeFilterCard()"
       ></i>
       <h5 class="card-title">Discover recipes</h5>
       <form action="" method="get" @submit.prevent="selectFilters()">
-        <!-- recipe name  -->
+        <<!-- Campo di input per il nome della ricetta -->
         <label for="name" class="form-label mt-3 mb-0"> Search by name </label>
         <input
           v-model="store.searchedTerm"
@@ -75,7 +81,8 @@ export default {
           aria-describedby="button-addon2"
           @keyup.enter="selectFilters()"
         />
-        <!-- recipe cuisine  -->
+
+        <!-- Selezione della cucina -->
         <label for="cuisine" class="form-label mt-3 mb-0">
           Select cuisine
         </label>
@@ -92,7 +99,8 @@ export default {
             {{ cuisine.name }}
           </option>
         </select>
-        <!-- recipe difficolty  -->
+
+        <!-- Selezione della difficoltà -->
         <label for="difficulty" class="form-label mt-3 mb-0">
           Select difficulty
         </label>
@@ -111,10 +119,8 @@ export default {
           </option>
         </select>
 
-        <!-- recipe diets  -->
-        <label for="difficulty" class="form-label mt-3 mb-0">
-          Select diet
-        </label>
+        <!-- Selezione del tipo di dieta -->
+        <label for="diet" class="form-label mt-3 mb-0"> Select diet </label>
         <select
           v-model="selectedDiet"
           id="diet"
@@ -129,6 +135,8 @@ export default {
             {{ diet.name }}
           </option>
         </select>
+
+        <!-- Pulsante per applicare i filtri -->
         <button
           type="submit"
           class="btn btn-orange rounded-pill mt-3"
@@ -137,6 +145,8 @@ export default {
         >
           Search
         </button>
+
+        <!-- Pulsante per resettare i filtri -->
         <button
           class="btn btn-orange bg-secondary border-secondary rounded-pill mt-3 ms-3"
           type="reset"

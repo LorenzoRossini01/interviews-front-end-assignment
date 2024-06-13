@@ -1,17 +1,16 @@
 <script>
-import axios from "axios";
-import { store, api } from "../store/index";
 export default {
   data() {
     return {
       commentData: {
-        commentText: "",
-        commentRating: null,
+        commentText: "", // Testo del commento
+        commentRating: null, // Valutazione del commento
       },
-      recipeIndexPage: parseInt(this.$route.params.page),
+      recipeIndexPage: parseInt(this.$route.params.page), // Numero della pagina corrente delle ricette
     };
   },
 
+  // Props passate al componente
   props: {
     recipe: {
       type: Object,
@@ -36,31 +35,36 @@ export default {
   },
 
   computed: {
+    // Calcola l'URL completo dell'immagine della ricetta
     recipeImage() {
       return "http://localhost:8080" + this.recipe.image;
     },
 
+    // Converte le istruzioni della ricetta in un array di passaggi
     procedureArray() {
       const procedure = this.recipe.instructions;
       return procedure ? procedure.split(". ") : [];
     },
   },
 
-  emits: ["addComment", "deleteComment"],
+  emits: ["addComment", "deleteComment"], // Emittente di eventi per aggiungere e cancellare commenti
 
   methods: {
+    // Metodo per inviare un commento
     postComment() {
       this.$emit("addComment", this.commentData);
       this.commentData = {
-        commentText: "",
-        commentRating: null,
+        commentText: "", // Reimposta il testo del commento
+        commentRating: null, // Reimposta la valutazione del commento
       };
     },
 
+    // Metodo per cancellare un commento
     deleteComment(comment) {
       this.$emit("deleteComment", comment);
     },
 
+    // Metodo per tornare alla lista delle ricette
     goBack() {
       this.$router.push({
         name: "recipes.index",
@@ -68,16 +72,13 @@ export default {
       });
     },
   },
-
-  created() {
-    console.log(this.recipeIndexPage);
-  },
 };
 </script>
 
 <template>
   <main>
     <div class="container">
+      <!-- Titolo della ricetta e pulsante per tornare indietro -->
       <div class="title d-flex justify-content-between align-items-center">
         <h1>{{ recipe.name }}</h1>
         <a @click.native.prevent="goBack" href="" class="text-dark">
@@ -85,10 +86,13 @@ export default {
           Back to List
         </a>
       </div>
+
+      <!-- Immagine della ricetta -->
       <div class="recipe-img-wrapper recipe">
         <img :src="recipeImage" alt="" />
       </div>
       <div class="row mt-5">
+        <!-- Sezione degli ingredienti e della procedura -->
         <div class="col-6 h-100">
           <div class="card">
             <h5 class="">Ingredients</h5>
@@ -104,6 +108,8 @@ export default {
             </ol>
           </div>
         </div>
+
+        <!-- Sezione delle cucine, difficoltà e diete -->
         <div class="col-6 h-100">
           <div class="card">
             <h5 class="card-title">Cuisine</h5>
@@ -124,6 +130,8 @@ export default {
             </ul>
           </div>
         </div>
+
+        <!-- Sezione dei commenti degli utenti -->
         <div class="card my-3">
           <h5>User Review</h5>
           <ul class="review-list">
@@ -152,6 +160,8 @@ export default {
               </span>
             </li>
           </ul>
+
+          <!-- Form per aggiungere un commento -->
           <form
             class="form-group d-flex flex-column justyfy-content-center align-items-end"
           >

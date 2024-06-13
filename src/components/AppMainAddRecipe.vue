@@ -5,47 +5,56 @@ import { store, api } from "../store/index";
 export default {
   data() {
     return {
-      recipe: {},
-      cuisines: [],
-      difficulties: [],
-      diets: [],
-      recipesIds: [],
+      // Stato del componente
+      recipe: {}, // Oggetto vuoto per la ricetta (potrebbe essere utilizzato per eventuali dettagli della ricetta)
+      cuisines: [], // Array per le opzioni di cucina disponibili
+      difficulties: [], // Array per le opzioni di difficoltà disponibili
+      diets: [], // Array per le opzioni di dieta disponibili
+      recipesIds: [], // Array di ID delle ricette esistenti
 
-      ingredients: [""],
-      steps: [""],
+      ingredients: [""], // Array per gli ingredienti della ricetta (inizializzato con un elemento vuoto)
+      steps: [""], // Array per i passaggi della ricetta (inizializzato con un elemento vuoto)
 
       FormData: {
-        id: "",
-        title: "",
-        selectedCuisine: "",
-        selectedDifficulty: "",
-        selectedDiet: "",
-        image: "",
-        ingredients: "",
-        steps: "",
+        // Oggetto per raccogliere i dati del form da inviare
+        id: "", // ID della ricetta (potrebbe essere generato automaticamente)
+        title: "", // Titolo della ricetta
+        selectedCuisine: "", // ID della cucina selezionata per la ricetta
+        selectedDifficulty: "", // ID della difficoltà selezionata per la ricetta
+        selectedDiet: "", // ID della dieta selezionata per la ricetta
+        image: "", // Immagine della ricetta (da caricare)
+        ingredients: "", // Stringa concatenata di ingredienti
+        steps: "", // Stringa concatenata di passaggi
       },
 
-      imageUploaded: false,
-      previewImage: "",
+      imageUploaded: false, // Flag per indicare se un'immagine è stata caricata
+      previewImage: "", // Anteprima dell'immagine caricata (visualizzata nell'interfaccia utente)
     };
   },
 
   methods: {
+    // Metodo per recuperare le opzioni di cucina disponibili
     fetchCuisines() {
       axios.get(api.cuisines).then((response) => {
         this.cuisines = response.data;
       });
     },
+
+    // Metodo per recuperare le opzioni di difficoltà disponibili
     fetchDifficulties() {
       axios.get(api.difficulties).then((response) => {
         this.difficulties = response.data;
       });
     },
+
+    // Metodo per recuperare le opzioni di dieta disponibili
     fetchDiets() {
       axios.get(api.diets).then((response) => {
         this.diets = response.data;
       });
     },
+
+    // Metodo per recuperare gli ID delle ricette esistenti (per generare un nuovo ID univoco)
     fetchRecipesId() {
       axios.get(api.recipes).then((response) => {
         const recipes = response.data;
@@ -53,42 +62,55 @@ export default {
       });
     },
 
+    // Gestione dell'upload dell'immagine della ricetta
     handleImageUpload() {
       const image = event.target.files[0];
       this.imageUploaded = true;
       if (image) {
         const reader = new FileReader();
         reader.onload = (e) => {
+          // Salvataggio dell'immagine e anteprima nell'oggetto FormData
           this.FormData.image = image;
           this.previewImage = e.target.result;
           console.log(this.FormData.image);
           console.log(this.previewImage);
         };
-        reader.readAsDataURL(image);
+        reader.readAsDataURL(image); // Lettura del file come URL dati
       }
     },
 
+    // Aggiunta di un nuovo campo per gli ingredienti nell'interfaccia utente
     addIngredient() {
       this.ingredients.push("");
     },
+
+    // Aggiunta di un nuovo campo per i passaggi nell'interfaccia utente
     addStep() {
       this.steps.push("");
     },
 
+    // Aggiornamento dell'array degli ingredienti quando l'utente modifica un campo
     updateIngredient(index, value) {
       this.ingredients[index] = value;
     },
+
+    // Aggiornamento dell'array dei passaggi quando l'utente modifica un campo
     updateStep(index, value) {
       this.steps[index] = value;
     },
 
+    // Invio dei dati del form per aggiungere una nuova ricetta
     addRecipe() {
+      // Concatenazione degli ingredienti e dei passaggi in stringhe separate da virgole e punti
       this.FormData.ingredients = this.ingredients.join(",");
       this.FormData.steps = this.steps.join(". ");
+
+      // Generazione di un nuovo ID per la nuova ricetta (basato sull'ultimo ID presente)
       this.FormData.id = this.recipesIds[this.recipesIds.length - 1] + 1;
 
+      // Costruzione dell'oggetto da inviare al server
       let props = {
-        // id: parseInt(this.recipesIds[this.recipesIds.length - 1]) + 1,
+        id: parseInt(this.FormData.id),
         name: this.FormData.title,
         ingredients: this.FormData.ingredients,
         instructions: this.FormData.steps,
@@ -98,6 +120,8 @@ export default {
         image: this.FormData.image,
       };
       console.log(props);
+
+      // Chiamata API per aggiungere la nuova ricetta
       axios
         .post(api.recipes, props, {
           headers: {
@@ -105,11 +129,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
-          this.$router.push({ name: "recipes.index", params: { page: 1 } });
+          console.log(response); // Log della risposta dalla chiamata API
+          this.$router.push({ name: "recipes.index", params: { page: 1 } }); // Navigazione alla pagina delle ricette dopo l'aggiunta
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error); // Gestione degli errori nella chiamata API
         });
     },
   },

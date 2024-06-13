@@ -1,11 +1,15 @@
 <script>
+// Importa lo store per gestire lo stato globale
 import { store } from "../store/index";
+
 export default {
   data() {
     return {
-      store,
+      store, // Stato globale dell'applicazione
     };
   },
+
+  // Props passate al componente
   props: {
     recipe: {
       type: Object,
@@ -34,18 +38,24 @@ export default {
   },
 
   computed: {
+    // Restituisce l'URL completo dell'immagine della ricetta
     recipeImage() {
       return "http://localhost:8080" + this.recipe.image;
     },
 
+    // Restituisce il nome della cucina associata alla ricetta
     cuisineName() {
       const cuisine = this.cuisines.find((c) => c.id === this.recipe.cuisineId);
       return cuisine ? "#" + cuisine.name : "Unknown";
     },
+
+    // Restituisce il nome della dieta associata alla ricetta
     dietName() {
       const diet = this.diets.find((d) => d.id === this.recipe.dietId);
       return diet ? diet.name : "Unknown";
     },
+
+    // Restituisce il nome della difficoltà associata alla ricetta
     difficultyName() {
       const difficulty = this.difficulties.find(
         (d) => d.id === this.recipe.difficultyId
@@ -53,11 +63,14 @@ export default {
       return difficulty ? difficulty.name : "Unknown";
     },
 
+    // Filtra i commenti associati alla ricetta corrente
     filteredComments() {
       return this.comments.filter(
         (comment) => comment.recipeId === this.recipe.id
       );
     },
+
+    // Calcola la valutazione media dei commenti
     averageRating() {
       const ratings = this.filteredComments.map((comment) => comment.rating);
       if (ratings.length === 0) return 0;
@@ -65,18 +78,20 @@ export default {
       return (sum / ratings.length).toFixed(1);
     },
   },
-  methods: {},
 };
 </script>
 
 <template>
   <div class="card">
     <div class="row g-2 d-flex">
+      <!-- Colonna per l'immagine della ricetta -->
       <div class="col">
         <div class="img-wrapper">
           <img class="card-img-top" :src="recipeImage" :alt="recipe.name" />
         </div>
       </div>
+
+      <!-- Colonna per i dettagli della ricetta  -->
       <div class="col">
         <div class="detail-wrapper">
           <h3 class="h5">{{ recipe.name }}</h3>
@@ -89,6 +104,8 @@ export default {
           </span>
         </div>
       </div>
+
+      <!-- colonna per altre informazioni della ricetta e link al dettaglio  -->
       <div class="col ms-auto">
         <div class="control-wrapper">
           <span><strong>Difficulty: </strong>{{ difficultyName }}</span>
