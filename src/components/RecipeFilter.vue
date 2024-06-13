@@ -68,7 +68,7 @@ export default {
       ></i>
       <h5 class="card-title">Discover recipes</h5>
       <form action="" method="get" @submit.prevent="selectFilters()">
-        <<!-- Campo di input per il nome della ricetta -->
+        <!-- Campo di input per il nome della ricetta -->
         <label for="name" class="form-label mt-3 mb-0"> Search by name </label>
         <input
           v-model="store.searchedTerm"
