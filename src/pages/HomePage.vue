@@ -26,7 +26,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.container {
+.container-fluid {
   height: 100vh;
   .row {
     height: 100%;
