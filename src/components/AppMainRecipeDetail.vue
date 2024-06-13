@@ -91,7 +91,7 @@ export default {
       <div class="recipe-img-wrapper recipe">
         <img :src="recipeImage" alt="" />
       </div>
-      <div class="row mt-5">
+      <div class="row g-2 g-md-3 g-lg-4 mt-5">
         <!-- Sezione degli ingredienti e della procedura -->
         <div class="col-6 h-100">
           <div class="card">

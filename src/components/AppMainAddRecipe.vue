@@ -149,7 +149,7 @@ export default {
 
 <template>
   <main>
-    <div class="container">
+    <div class="container py-3">
       <form @submit.prevent="addRecipe()">
         <h3 class="card-title my-3">Recipe Detail</h3>
         <div class="card p-3 mt-3 bg-body-tertiary">
@@ -191,7 +191,7 @@ export default {
         <div class="card p-3 mt-3 bg-body-tertiary">
           <div class="row">
             <!-- ingredients  -->
-            <div class="form-group col-6">
+            <div class="form-group col-lg-6">
               <label for="recipe-ingredients">Main Ingredients</label>
               <div v-for="(ingredient, index) in ingredients" :key="index">
                 <input
@@ -212,7 +212,7 @@ export default {
             </div>
 
             <!-- steps  -->
-            <div class="form-group col-6">
+            <div class="form-group col-lg-6">
               <label for="recipe-ingredients">Recipe steps</label>
               <div v-for="(step, index) in steps" :key="index">
                 <input
@@ -233,7 +233,7 @@ export default {
             </div>
 
             <!-- recipe cuisine  -->
-            <div class="form-group col-4">
+            <div class="form-group col-md-4">
               <label for="cuisine" class="form-label mt-3 mb-0">
                 Select cuisine
               </label>
@@ -253,7 +253,7 @@ export default {
               </select>
             </div>
             <!-- recipe difficulty  -->
-            <div class="form-group col-4">
+            <div class="form-group col-md-4">
               <label for="difficulty" class="form-label mt-3 mb-0">
                 Select difficulty
               </label>
@@ -278,7 +278,7 @@ export default {
             </div>
 
             <!-- recipe diets  -->
-            <div class="form-group col-4">
+            <div class="form-group col-md-4">
               <label for="difficulty" class="form-label mt-3 mb-0">
                 Select diet
               </label>

@@ -562,6 +562,13 @@
       "comment": "buonissimo",
       "rating": 3,
       "date": "2024-06-12 19:54:08"
+    },
+    {
+      "id": 53,
+      "recipeId": "2",
+      "comment": "buona questa pizza",
+      "rating": 3,
+      "date": "2024-06-13 18:49:11"
     }
   ],
   "cuisines": [

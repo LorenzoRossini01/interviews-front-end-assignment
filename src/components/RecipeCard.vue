@@ -85,53 +85,106 @@ export default {
   <div class="card">
     <div class="row g-2 d-flex">
       <!-- Colonna per l'immagine della ricetta -->
-      <div class="col">
+      <div class="col-12 col-lg">
         <div class="img-wrapper">
           <img class="card-img-top" :src="recipeImage" :alt="recipe.name" />
         </div>
       </div>
 
-      <!-- Colonna per i dettagli della ricetta  -->
-      <div class="col">
-        <div class="detail-wrapper">
-          <h3 class="h5">{{ recipe.name }}</h3>
-          <p>{{ dietName }}</p>
-          <p>
-            Only <strong>{{ recipe.ingredients.length }}</strong> Ingredients
-          </p>
-          <span class="badge rounded-pill">
-            {{ cuisineName }}
-          </span>
-        </div>
-      </div>
-
-      <!-- colonna per altre informazioni della ricetta e link al dettaglio  -->
-      <div class="col ms-auto">
-        <div class="control-wrapper">
-          <span><strong>Difficulty: </strong>{{ difficultyName }}</span>
-          <div class="rating-container mt-2">
-            <span class="rating me-2" v-if="averageRating >= 4.5"
-              >Highly rated</span
-            >
-            <span
-              class="badge rounded-pill"
-              :style="{
-                backgroundColor: averageRating >= 4.5 && 'orangered',
-                color: averageRating >= 4.5 && 'white',
-                borderColor: averageRating >= 4.5 && 'white',
-              }"
-            >
-              {{ averageRating }}
-            </span>
+      <div class="col-12 col-lg">
+        <div class="row d-none d-lg-flex h-100">
+          <!-- Colonna per i dettagli della ricetta  -->
+          <div class="col-8">
+            <div class="detail-wrapper d-flex justify-content-between">
+              <h3 class="h2">{{ recipe.name }}</h3>
+              <p>{{ dietName }}</p>
+              <p>
+                Only
+                <strong>{{ recipe.ingredients.length }}</strong> Ingredients
+              </p>
+              <span class="badge rounded-pill">
+                {{ cuisineName }}
+              </span>
+            </div>
           </div>
-          <router-link
-            :to="{
-              name: 'recipes.show',
-              params: { id: recipe.id, page: currentPage },
-            }"
-            class="btn btn-orange rounded-pill mt-auto"
-            >View Details</router-link
-          >
+          <!-- colonna per altre informazioni della ricetta e link al dettaglio  -->
+          <div class="col-4 ms-auto">
+            <div class="control-wrapper d-flex justify-content-center">
+              <span class="text-end mt-auto"
+                ><strong>Difficulty: </strong>{{ difficultyName }}</span
+              >
+              <div class="rating-container mt-2">
+                <span class="rating text-end me-2" v-if="averageRating >= 4.5"
+                  >Highly rated</span
+                >
+                <span
+                  class="badge rounded-pill"
+                  :style="{
+                    backgroundColor: averageRating >= 4.5 && 'orangered',
+                    color: averageRating >= 4.5 && 'white',
+                    borderColor: averageRating >= 4.5 && 'white',
+                  }"
+                >
+                  {{ averageRating }}
+                </span>
+              </div>
+              <router-link
+                :to="{
+                  name: 'recipes.show',
+                  params: { id: recipe.id, page: currentPage },
+                }"
+                class="btn btn-orange rounded-pill mt-3"
+                >View Details</router-link
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row d-lg-none">
+          <!-- Colonna per i dettagli della ricetta  -->
+          <div class="col-6">
+            <div class="detail-wrapper d-flex flex-column gap-3">
+              <h3 class="h4">{{ recipe.name }}</h3>
+              <p>{{ dietName }}</p>
+              <p>
+                Only
+                <strong>{{ recipe.ingredients.length }}</strong> Ingredients
+              </p>
+              <span><strong>Difficulty: </strong>{{ difficultyName }}</span>
+            </div>
+          </div>
+          <!-- colonna per altre informazioni della ricetta e link al dettaglio  -->
+          <div class="col-6">
+            <div class="control-wrapper d-flex flex-column gap-3">
+              <div class="rating-container mt-2">
+                <span class="rating me-2" v-if="averageRating >= 4.5"
+                  >Highly rated</span
+                >
+                <span
+                  class="badge rounded-pill"
+                  :style="{
+                    backgroundColor: averageRating >= 4.5 && 'orangered',
+                    color: averageRating >= 4.5 && 'white',
+                    borderColor: averageRating >= 4.5 && 'white',
+                  }"
+                >
+                  {{ averageRating }}
+                </span>
+              </div>
+              <span class="badge rounded-pill">
+                {{ cuisineName }}
+              </span>
+
+              <router-link
+                :to="{
+                  name: 'recipes.show',
+                  params: { id: recipe.id, page: currentPage },
+                }"
+                class="btn btn-orange rounded-pill mt-auto"
+                >View Details</router-link
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -149,7 +202,8 @@ export default {
   margin-bottom: 1rem;
   .row {
     height: auto;
-    .col {
+    .col-12,
+    .col-lg {
       height: auto;
     }
     p,
@@ -206,5 +260,8 @@ export default {
       }
     }
   }
+}
+
+@media screen and (min-width: 768px) {
 }
 </style>
