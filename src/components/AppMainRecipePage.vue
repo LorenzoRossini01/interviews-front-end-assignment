@@ -239,8 +239,10 @@ export default {
 <template>
   <main>
     <div class="container py-3">
-      <div class="row justify-content-center g-3">
-        <div :class="filtersActive ? 'col-8' : 'col-12'">
+      <div
+        class="row d-flex flex-column-reverse justify-content-center flex-lg-row g-3"
+      >
+        <div :class="filtersActive ? 'col-12 col-lg-8' : 'col-12'">
           <RecipeList
             :recipes="recipes"
             :comments="comments"
@@ -253,7 +255,7 @@ export default {
             @sendSelectedOrder="getSelectedOrder"
           />
           <div
-            class="pagination-container d-flex justify-content-between align-items-center"
+            class="pagination-container d-flex justify-content-md-between flex-column-reverse flex-md-row align-items-md-center"
           >
             <router-link
               :to="{
@@ -264,9 +266,10 @@ export default {
               }"
               class="btn btn-orange rounded-pill d-flex justify-content-center align-items-center"
             >
-              <i class="fa-solid fa-plus me-3"></i>
+              <i class="fa-solid fa-plus me-lg-3"></i>
               Add Recipe
             </router-link>
+
             <div class="pagination" v-if="totalPages > 1">
               <button @click="previousPage" :disabled="currentPage === 1">
                 Previous
@@ -287,7 +290,7 @@ export default {
             </div>
           </div>
         </div>
-        <div :class="filtersActive ? 'col-4' : ''">
+        <div :class="filtersActive ? 'col-12 col-lg-4' : ''">
           <RecipeFilter
             :recipes="recipes"
             :comments="comments"
@@ -310,7 +313,6 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1rem;
 
   button {
     padding: 0.5rem 1rem;
@@ -326,6 +328,14 @@ export default {
     &:disabled {
       background-color: #bbb;
       cursor: not-allowed;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+
+    button {
+      margin-bottom: 0.5rem; /* Spazio tra i pulsanti nella disposizione a colonna */
     }
   }
 }

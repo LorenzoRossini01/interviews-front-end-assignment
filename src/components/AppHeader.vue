@@ -44,19 +44,36 @@ export default {
         class="h2"
         >RecipeBook</router-link
       >
-      <form class="d-flex" role="search" @submit.prevent="submitSearch()">
-        <input
-          v-model="searchedTerm"
-          class="form-control me-2 rounded-pill"
-          type="search"
-          placeholder="Search for recipes"
-          aria-label="Search"
-          @keyup.enter="submitSearch()"
-        />
-        <button class="btn btn-orange rounded-pill" type="submit">
-          Search
-        </button>
-      </form>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarText"
+        aria-controls="navbarText"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <form
+          class="d-flex mt-3 mt-lg-0"
+          role="search"
+          @submit.prevent="submitSearch()"
+        >
+          <input
+            v-model="searchedTerm"
+            class="form-control me-2 rounded-pill"
+            type="search"
+            placeholder="Search for recipes"
+            aria-label="Search"
+            @keyup.enter="submitSearch()"
+          />
+          <button class="btn btn-orange rounded-pill" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
     </div>
   </nav>
 </template>

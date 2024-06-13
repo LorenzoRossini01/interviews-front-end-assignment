@@ -136,23 +136,25 @@ export default {
           </option>
         </select>
 
-        <!-- Pulsante per applicare i filtri -->
-        <button
-          type="submit"
-          class="btn btn-orange rounded-pill mt-3"
-          id="button-addon2"
-          @click="selectFilters()"
-        >
-          Search
-        </button>
+        <div class="row g-3 mt-3 px-2">
+          <!-- Pulsante per applicare i filtri -->
+          <button
+            type="submit"
+            class="btn btn-orange rounded-pill"
+            id="button-addon2"
+            @click="selectFilters()"
+          >
+            Search
+          </button>
 
-        <!-- Pulsante per resettare i filtri -->
-        <button
-          class="btn btn-orange bg-secondary border-secondary rounded-pill mt-3 ms-3"
-          type="reset"
-        >
-          Reset filters
-        </button>
+          <!-- Pulsante per resettare i filtri -->
+          <button
+            class="btn btn-orange bg-secondary border-secondary rounded-pill"
+            type="reset"
+          >
+            Reset filters
+          </button>
+        </div>
       </form>
     </div>
   </div>
