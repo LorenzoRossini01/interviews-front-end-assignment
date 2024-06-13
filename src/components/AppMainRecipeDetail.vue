@@ -36,7 +36,7 @@ export default {
 
   computed: {
     recipeImage() {
-      return "../../assets/" + this.recipe.image;
+      return "http://localhost:8080" + this.recipe.image;
     },
 
     procedureArray() {
@@ -64,167 +64,169 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <h1>{{ recipe.name }}</h1>
-    <div class="recipe-img-wrapper recipe">
-      <img :src="recipeImage" alt="" />
-    </div>
-    <div class="row mt-5">
-      <div class="col-6 h-100">
-        <div class="card">
-          <h5 class="">Ingredients</h5>
-          <ul>
-            <li v-for="ingredient in recipe.ingredients">{{ ingredient }}</li>
-          </ul>
-        </div>
-
-        <div class="card my-3">
-          <h5>Procedure</h5>
-          <ol class="ps-3">
-            <li v-for="step in procedureArray">{{ step }}</li>
-          </ol>
-        </div>
+  <main>
+    <div class="container">
+      <h1>{{ recipe.name }}</h1>
+      <div class="recipe-img-wrapper recipe">
+        <img :src="recipeImage" alt="" />
       </div>
-      <div class="col-6 h-100">
-        <div class="card">
-          <h5 class="card-title">Cuisine</h5>
-          <ul>
-            <li v-for="cuisine in cuisines">{{ cuisine.name }}</li>
-          </ul>
-        </div>
-        <div class="card my-3">
-          <h5 class="card-title">Difficulty</h5>
-          <ul>
-            <li v-for="difficulty in difficulties">{{ difficulty.name }}</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h5 class="card-title">Diets</h5>
-          <ul>
-            <li v-for="diet in diets">{{ diet.name }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card my-3">
-        <h5>User Review</h5>
-        <ul class="review-list">
-          <li
-            v-for="comment in comments"
-            class="d-flex align-items-center gap-3"
-          >
-            <span class="img-wrapper">
-              <img src="https://picsum.photos/200" alt="" />
-            </span>
-            <span>
-              <h5 class="mb-0 text-start">Name Surname</h5>
-              <p>
-                <i
-                  class="fa-solid fa-star fa-sm"
-                  v-for="star in comment.rating"
-                ></i>
-              </p>
-              <p>{{ comment.comment }}</p>
-            </span>
-            <span class="ms-auto me-3 delete-comment">
-              <i
-                class="fa-solid fa-trash-alt fa-sm p-3"
-                @click="deleteComment(comment)"
-              ></i>
-            </span>
-          </li>
-        </ul>
-        <form
-          class="form-group d-flex flex-column justyfy-content-center align-items-end"
-        >
-          <input
-            type="text"
-            class="form-control rounded-pill"
-            placeholder="Leave your review here"
-            v-model="commentData.commentText"
-          />
-
-          <div class="input-group d-flex align-items-center mt-3 ps-3">
-            <label>Rate Recipe</label>
-            <div class="rating ms-3">
-              <input
-                type="radio"
-                id="star5"
-                name="rating"
-                value="5"
-                v-model="commentData.commentRating"
-              />
-              <label
-                class="star"
-                for="star5"
-                title="Awesome"
-                aria-hidden="true"
-              ></label>
-              <input
-                type="radio"
-                id="star4"
-                name="rating"
-                value="4"
-                v-model="commentData.commentRating"
-              />
-              <label
-                class="star"
-                for="star4"
-                title="Great"
-                aria-hidden="true"
-              ></label>
-              <input
-                type="radio"
-                id="star3"
-                name="rating"
-                value="3"
-                v-model="commentData.commentRating"
-              />
-              <label
-                class="star"
-                for="star3"
-                title="Very good"
-                aria-hidden="true"
-              ></label>
-              <input
-                type="radio"
-                id="star2"
-                name="rating"
-                value="2"
-                v-model="commentData.commentRating"
-              />
-              <label
-                class="star"
-                for="star2"
-                title="Good"
-                aria-hidden="true"
-              ></label>
-              <input
-                type="radio"
-                id="star1"
-                name="rating"
-                value="1"
-                v-model="commentData.commentRating"
-              />
-              <label
-                class="star"
-                for="star1"
-                title="Bad"
-                aria-hidden="true"
-              ></label>
-            </div>
+      <div class="row mt-5">
+        <div class="col-6 h-100">
+          <div class="card">
+            <h5 class="">Ingredients</h5>
+            <ul>
+              <li v-for="ingredient in recipe.ingredients">{{ ingredient }}</li>
+            </ul>
           </div>
 
-          <button
-            type="button"
-            class="btn btn-orange mt-3 rounded-pill"
-            @click="postComment()"
+          <div class="card my-3">
+            <h5>Procedure</h5>
+            <ol class="ps-3">
+              <li v-for="step in procedureArray">{{ step }}</li>
+            </ol>
+          </div>
+        </div>
+        <div class="col-6 h-100">
+          <div class="card">
+            <h5 class="card-title">Cuisine</h5>
+            <ul>
+              <li v-for="cuisine in cuisines">{{ cuisine.name }}</li>
+            </ul>
+          </div>
+          <div class="card my-3">
+            <h5 class="card-title">Difficulty</h5>
+            <ul>
+              <li v-for="difficulty in difficulties">{{ difficulty.name }}</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h5 class="card-title">Diets</h5>
+            <ul>
+              <li v-for="diet in diets">{{ diet.name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card my-3">
+          <h5>User Review</h5>
+          <ul class="review-list">
+            <li
+              v-for="comment in comments"
+              class="d-flex align-items-center gap-3"
+            >
+              <span class="img-wrapper">
+                <img src="https://picsum.photos/200" alt="" />
+              </span>
+              <span>
+                <h5 class="mb-0 text-start">Name Surname</h5>
+                <p>
+                  <i
+                    class="fa-solid fa-star fa-sm"
+                    v-for="star in comment.rating"
+                  ></i>
+                </p>
+                <p>{{ comment.comment }}</p>
+              </span>
+              <span class="ms-auto me-3 delete-comment">
+                <i
+                  class="fa-solid fa-trash-alt fa-sm p-3"
+                  @click="deleteComment(comment)"
+                ></i>
+              </span>
+            </li>
+          </ul>
+          <form
+            class="form-group d-flex flex-column justyfy-content-center align-items-end"
           >
-            Submit
-          </button>
-        </form>
+            <input
+              type="text"
+              class="form-control rounded-pill"
+              placeholder="Leave your review here"
+              v-model="commentData.commentText"
+            />
+
+            <div class="input-group d-flex align-items-center mt-3 ps-3">
+              <label>Rate Recipe</label>
+              <div class="rating ms-3">
+                <input
+                  type="radio"
+                  id="star5"
+                  name="rating"
+                  value="5"
+                  v-model="commentData.commentRating"
+                />
+                <label
+                  class="star"
+                  for="star5"
+                  title="Awesome"
+                  aria-hidden="true"
+                ></label>
+                <input
+                  type="radio"
+                  id="star4"
+                  name="rating"
+                  value="4"
+                  v-model="commentData.commentRating"
+                />
+                <label
+                  class="star"
+                  for="star4"
+                  title="Great"
+                  aria-hidden="true"
+                ></label>
+                <input
+                  type="radio"
+                  id="star3"
+                  name="rating"
+                  value="3"
+                  v-model="commentData.commentRating"
+                />
+                <label
+                  class="star"
+                  for="star3"
+                  title="Very good"
+                  aria-hidden="true"
+                ></label>
+                <input
+                  type="radio"
+                  id="star2"
+                  name="rating"
+                  value="2"
+                  v-model="commentData.commentRating"
+                />
+                <label
+                  class="star"
+                  for="star2"
+                  title="Good"
+                  aria-hidden="true"
+                ></label>
+                <input
+                  type="radio"
+                  id="star1"
+                  name="rating"
+                  value="1"
+                  v-model="commentData.commentRating"
+                />
+                <label
+                  class="star"
+                  for="star1"
+                  title="Bad"
+                  aria-hidden="true"
+                ></label>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-orange mt-3 rounded-pill"
+              @click="postComment()"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped lang="scss">

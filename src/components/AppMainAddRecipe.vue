@@ -124,159 +124,164 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <form @submit.prevent="addRecipe()">
-      <h3 class="card-title my-3">Recipe Detail</h3>
-      <div class="card p-3 mt-3 bg-body-tertiary">
-        <div class="form-group">
-          <label for="recipe-name">Recipe Name</label>
-          <input
-            type="text"
-            class="form-control rounded-pill"
-            placeholder="Add recipe name"
-            id="recipe-name"
-            v-model="FormData.title"
-            required
-          />
-        </div>
-        <div class="form-group mt-3">
-          <label for="input-image-container">Cover Image</label>
-          <div class="input-image-container" id="input-image-container">
-            <img
-              :src="previewImage"
-              :class="!FormData.image ? 'd-none' : ''"
-              alt=""
-            />
+  <main>
+    <div class="container">
+      <form @submit.prevent="addRecipe()">
+        <h3 class="card-title my-3">Recipe Detail</h3>
+        <div class="card p-3 mt-3 bg-body-tertiary">
+          <div class="form-group">
+            <label for="recipe-name">Recipe Name</label>
             <input
-              type="file"
-              name="image"
-              id="image"
-              class="inputfile"
-              @change="handleImageUpload()"
+              type="text"
+              class="form-control rounded-pill"
+              placeholder="Add recipe name"
+              id="recipe-name"
+              v-model="FormData.title"
               required
             />
-            <label
-              for="image"
-              :class="imageUploaded ? 'text-white border-white' : ''"
-              >Choose a Photo</label
-            >
           </div>
-        </div>
-      </div>
-      <div class="card p-3 mt-3 bg-body-tertiary">
-        <div class="row">
-          <!-- ingredients  -->
-          <div class="form-group col-6">
-            <label for="recipe-ingredients">Main Ingredients</label>
-            <div v-for="(ingredient, index) in ingredients" :key="index">
+          <div class="form-group mt-3">
+            <label for="input-image-container">Cover Image</label>
+            <div class="input-image-container" id="input-image-container">
+              <img
+                :src="previewImage"
+                :class="!FormData.image ? 'd-none' : ''"
+                alt=""
+              />
               <input
-                type="text"
-                class="form-control rounded-pill mt-2"
-                :placeholder="'Add ingredient ' + (index + 1)"
-                :value="ingredients[index]"
-                @input="updateIngredient(index, $event.target.value)"
+                type="file"
+                name="image"
+                id="image"
+                class="inputfile"
+                @change="handleImageUpload()"
                 required
               />
+              <label
+                for="image"
+                :class="imageUploaded ? 'text-white border-white' : ''"
+                >Choose a Photo</label
+              >
             </div>
-            <div
-              class="btn btn-secondary rounded-pill w-100 mt-3"
-              @click="addIngredient()"
-            >
-              +
-            </div>
-          </div>
-
-          <!-- steps  -->
-          <div class="form-group col-6">
-            <label for="recipe-ingredients">Recipe steps</label>
-            <div v-for="(step, index) in steps" :key="index">
-              <input
-                type="text"
-                class="form-control rounded-pill mt-2"
-                :placeholder="'Add step ' + (index + 1)"
-                :value="step"
-                @input="updateStep(index, $event.target.value)"
-                required
-              />
-            </div>
-            <div
-              class="btn btn-secondary rounded-pill w-100 mt-3"
-              @click="addStep()"
-            >
-              +
-            </div>
-          </div>
-
-          <!-- recipe cuisine  -->
-          <div class="form-group col-4">
-            <label for="cuisine" class="form-label mt-3 mb-0">
-              Select cuisine
-            </label>
-            <select
-              v-model="FormData.selectedCuisine"
-              id="cuisine"
-              name="cuisine"
-              class="form-select rounded-pill"
-              aria-label="Default select example"
-              required
-            >
-              <option :value="0" class="d-none">Choose cuisine</option>
-              <option :value="null">None</option>
-              <option :value="cuisine.id" v-for="cuisine in cuisines">
-                {{ cuisine.name }}
-              </option>
-            </select>
-          </div>
-          <!-- recipe difficulty  -->
-          <div class="form-group col-4">
-            <label for="difficulty" class="form-label mt-3 mb-0">
-              Select difficulty
-            </label>
-            <select
-              v-model="FormData.selectedDifficulty"
-              id="difficulty"
-              name="difficulty"
-              class="form-select rounded-pill"
-              aria-label="Default select example"
-              required
-            >
-              <option :value="0" class="d-none">Choose difficulty</option>
-              <option :value="null">None</option>
-
-              <option :value="difficulty.id" v-for="difficulty in difficulties">
-                {{ difficulty.name }}
-              </option>
-            </select>
-          </div>
-
-          <!-- recipe diets  -->
-          <div class="form-group col-4">
-            <label for="difficulty" class="form-label mt-3 mb-0">
-              Select diet
-            </label>
-            <select
-              v-model="FormData.selectedDiet"
-              id="diet"
-              name="diet"
-              class="form-select rounded-pill"
-              aria-label="Default select example"
-              required
-            >
-              <option :value="0" class="d-none">Choose diet type</option>
-              <option :value="null">None</option>
-
-              <option :value="diet.id" v-for="diet in diets">
-                {{ diet.name }}
-              </option>
-            </select>
           </div>
         </div>
-      </div>
-      <button type="submit" class="btn btn-orange rounded-pill mt-3">
-        Publish
-      </button>
-    </form>
-  </div>
+        <div class="card p-3 mt-3 bg-body-tertiary">
+          <div class="row">
+            <!-- ingredients  -->
+            <div class="form-group col-6">
+              <label for="recipe-ingredients">Main Ingredients</label>
+              <div v-for="(ingredient, index) in ingredients" :key="index">
+                <input
+                  type="text"
+                  class="form-control rounded-pill mt-2"
+                  :placeholder="'Add ingredient ' + (index + 1)"
+                  :value="ingredients[index]"
+                  @input="updateIngredient(index, $event.target.value)"
+                  required
+                />
+              </div>
+              <div
+                class="btn btn-secondary rounded-pill w-100 mt-3"
+                @click="addIngredient()"
+              >
+                +
+              </div>
+            </div>
+
+            <!-- steps  -->
+            <div class="form-group col-6">
+              <label for="recipe-ingredients">Recipe steps</label>
+              <div v-for="(step, index) in steps" :key="index">
+                <input
+                  type="text"
+                  class="form-control rounded-pill mt-2"
+                  :placeholder="'Add step ' + (index + 1)"
+                  :value="step"
+                  @input="updateStep(index, $event.target.value)"
+                  required
+                />
+              </div>
+              <div
+                class="btn btn-secondary rounded-pill w-100 mt-3"
+                @click="addStep()"
+              >
+                +
+              </div>
+            </div>
+
+            <!-- recipe cuisine  -->
+            <div class="form-group col-4">
+              <label for="cuisine" class="form-label mt-3 mb-0">
+                Select cuisine
+              </label>
+              <select
+                v-model="FormData.selectedCuisine"
+                id="cuisine"
+                name="cuisine"
+                class="form-select rounded-pill"
+                aria-label="Default select example"
+                required
+              >
+                <option :value="0" class="d-none">Choose cuisine</option>
+                <option :value="null">None</option>
+                <option :value="cuisine.id" v-for="cuisine in cuisines">
+                  {{ cuisine.name }}
+                </option>
+              </select>
+            </div>
+            <!-- recipe difficulty  -->
+            <div class="form-group col-4">
+              <label for="difficulty" class="form-label mt-3 mb-0">
+                Select difficulty
+              </label>
+              <select
+                v-model="FormData.selectedDifficulty"
+                id="difficulty"
+                name="difficulty"
+                class="form-select rounded-pill"
+                aria-label="Default select example"
+                required
+              >
+                <option :value="0" class="d-none">Choose difficulty</option>
+                <option :value="null">None</option>
+
+                <option
+                  :value="difficulty.id"
+                  v-for="difficulty in difficulties"
+                >
+                  {{ difficulty.name }}
+                </option>
+              </select>
+            </div>
+
+            <!-- recipe diets  -->
+            <div class="form-group col-4">
+              <label for="difficulty" class="form-label mt-3 mb-0">
+                Select diet
+              </label>
+              <select
+                v-model="FormData.selectedDiet"
+                id="diet"
+                name="diet"
+                class="form-select rounded-pill"
+                aria-label="Default select example"
+                required
+              >
+                <option :value="0" class="d-none">Choose diet type</option>
+                <option :value="null">None</option>
+
+                <option :value="diet.id" v-for="diet in diets">
+                  {{ diet.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-orange rounded-pill mt-3">
+          Publish
+        </button>
+      </form>
+    </div>
+  </main>
 </template>
 
 <style scoped lang="scss">
