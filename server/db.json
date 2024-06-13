@@ -351,6 +351,21 @@
       "dietId": "3",
       "difficultyId": "1",
       "image": "/uploads/Pasta-Primavera-f.jpg"
+    },
+    {
+      "id": "1718274544838",
+      "name": "Tempura di gamberi",
+      "ingredients": [
+        "Gamberi sgusciati",
+        "farina",
+        "acqua frizzante",
+        "olio di semi"
+      ],
+      "instructions": "in una ciotola mescola farina e acqua frizzante. immergi i gamberi nella pastella . friggi i gamberi nell'olio bollente",
+      "cuisineId": "5",
+      "dietId": "3",
+      "difficultyId": "3",
+      "image": "/uploads/1718274544818.jpg"
     }
   ],
   "comments": [
