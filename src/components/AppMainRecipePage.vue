@@ -21,7 +21,7 @@ export default {
 
       selectedOrder: 0,
 
-      searchedTerm: "",
+      searchedTerm: this.$route.query.q ? this.$route.query.q : "",
       selectedCuisine: "",
       selectedDifficulty: "",
       selectedDiet: "",
@@ -206,64 +206,65 @@ export default {
 </script>
 
 <template>
-  <div class="container py-3">
-    <div class="row justify-content-center g-3">
-      <div :class="filtersActive ? 'col-8' : 'col-12'">
-        <RecipeList
-          :recipes="recipes"
-          :comments="comments"
-          :cuisines="cuisines"
-          :diets="diets"
-          :difficulties="difficulties"
-          :filtersActive="filtersActive"
-          @openFilterCard="handleFilterClick()"
-          @sendSelectedOrder="getSelectedOrder"
-        />
-        <div
-          class="pagination-container d-flex justify-content-between align-items-center"
-          v-if="totalPages > 1"
-        >
-          <router-link
-            :to="{ name: 'recipes.create' }"
-            class="btn btn-orange rounded-pill d-flex justify-content-center align-items-center"
+  <main>
+    <div class="container py-3">
+      <div class="row justify-content-center g-3">
+        <div :class="filtersActive ? 'col-8' : 'col-12'">
+          <RecipeList
+            :recipes="recipes"
+            :comments="comments"
+            :cuisines="cuisines"
+            :diets="diets"
+            :difficulties="difficulties"
+            :filtersActive="filtersActive"
+            @openFilterCard="handleFilterClick()"
+            @sendSelectedOrder="getSelectedOrder"
+          />
+          <div
+            class="pagination-container d-flex justify-content-between align-items-center"
           >
-            <i class="fa-solid fa-plus me-3"></i>
-            Add Recipe
-          </router-link>
-          <div class="pagination">
-            <button @click="previousPage" :disabled="currentPage === 1">
-              Previous
-            </button>
-
-            <button
-              v-for="page in totalPages"
-              :key="page"
-              @click="goToPage(page)"
-              :class="{ active: page === currentPage }"
+            <router-link
+              :to="{ name: 'recipes.create' }"
+              class="btn btn-orange rounded-pill d-flex justify-content-center align-items-center"
             >
-              {{ page }}
-            </button>
+              <i class="fa-solid fa-plus me-3"></i>
+              Add Recipe
+            </router-link>
+            <div class="pagination" v-if="totalPages > 1">
+              <button @click="previousPage" :disabled="currentPage === 1">
+                Previous
+              </button>
 
-            <button @click="nextPage" :disabled="currentPage === totalPages">
-              Next
-            </button>
+              <button
+                v-for="page in totalPages"
+                :key="page"
+                @click="goToPage(page)"
+                :class="{ active: page === currentPage }"
+              >
+                {{ page }}
+              </button>
+
+              <button @click="nextPage" :disabled="currentPage === totalPages">
+                Next
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div :class="filtersActive ? 'col-4' : ''">
-        <RecipeFilter
-          :recipes="recipes"
-          :comments="comments"
-          :cuisines="cuisines"
-          :diets="diets"
-          :difficulties="difficulties"
-          v-if="filtersActive"
-          @closeFilterCard="handleFilterClick()"
-          @selectFilters="getSelectedFilters"
-        />
+        <div :class="filtersActive ? 'col-4' : ''">
+          <RecipeFilter
+            :recipes="recipes"
+            :comments="comments"
+            :cuisines="cuisines"
+            :diets="diets"
+            :difficulties="difficulties"
+            v-if="filtersActive"
+            @closeFilterCard="handleFilterClick()"
+            @selectFilters="getSelectedFilters"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped lang="scss">

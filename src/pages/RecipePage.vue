@@ -25,9 +25,11 @@ export default {
 </script>
 
 <template>
-  <AppHeader @updateSearch="updateSearchedTerm" />
-  <AppMainRecipePage :HeadersearchedTerm="searchedTerm" />
-  <AppFooter />
+  <div class="wrapper d-flex flex-column">
+    <AppHeader @updateSearch="updateSearchedTerm" />
+    <AppMainRecipePage :HeadersearchedTerm="searchedTerm" />
+    <AppFooter />
+  </div>
 </template>
 
 <style lang="scss"></style>

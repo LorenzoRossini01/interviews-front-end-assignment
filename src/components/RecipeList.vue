@@ -58,9 +58,25 @@ export default {
 
 <template>
   <div class="top-list d-flex align-items-end mb-3">
-    <div class="title-container" v-if="store.hasBeenFiltered">
-      <p>Result for</p>
-      <h2>Recipes found for your search criteria</h2>
+    <div class="title">
+      <div
+        class="title-container"
+        v-if="store.hasBeenFiltered && recipes.length != 0"
+      >
+        <p>Result for</p>
+        <h2>Recipes found for your search criteria</h2>
+      </div>
+      <div class="title-container" v-if="recipes.length == 0">
+        <p>Result for</p>
+        <h2>No recipes found for your search criteria</h2>
+      </div>
+      <div
+        class="title-container"
+        v-if="!store.hasBeenFiltered && recipes.length != 0"
+      >
+        <p>Result for</p>
+        <h2>Recipe List</h2>
+      </div>
     </div>
     <div class="order-by ms-auto me-3">
       <select

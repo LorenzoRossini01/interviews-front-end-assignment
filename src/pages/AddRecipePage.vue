@@ -17,11 +17,9 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid">
-    <AppHeader />
-    <AppMainAddRecipe />
-    <AppFooter />
-  </div>
+  <AppHeader />
+  <AppMainAddRecipe />
+  <AppFooter />
 </template>
 
 <style scoped lang="scss"></style>

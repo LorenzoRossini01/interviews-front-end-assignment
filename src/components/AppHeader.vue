@@ -14,6 +14,15 @@ export default {
     submitSearch() {
       // Emetti un evento per notificare il componente padre dell'aggiornamento della ricerca
       this.$emit("updateSearch", this.searchedTerm);
+      if (this.searchedTerm) {
+        store.hasBeenFiltered = true;
+      } else {
+        store.hasBeenFiltered = false;
+      }
+      this.$router.push({
+        name: "recipes.index",
+        query: { q: this.searchedTerm },
+      });
     },
   },
 };

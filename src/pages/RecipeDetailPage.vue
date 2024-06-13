@@ -151,19 +151,17 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid">
-    <AppHeader />
-    <AppMainRecipeDetail
-      :recipe="recipe"
-      :comments="comments"
-      :cuisines="cuisines"
-      :difficulties="difficulties"
-      :diets="diets"
-      @addComment="postComment"
-      @deleteComment="deleteComment"
-    />
-    <AppFooter />
-  </div>
+  <AppHeader />
+  <AppMainRecipeDetail
+    :recipe="recipe"
+    :comments="comments"
+    :cuisines="cuisines"
+    :difficulties="difficulties"
+    :diets="diets"
+    @addComment="postComment"
+    @deleteComment="deleteComment"
+  />
+  <AppFooter />
 </template>
 
 <style scoped lang="scss"></style>
