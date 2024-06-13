@@ -31,7 +31,7 @@ export default {
 
   computed: {
     recipeImage() {
-      return "../../assets/" + this.recipe.image;
+      return "http://localhost:8080" + this.recipe.image;
     },
 
     cuisineName() {
