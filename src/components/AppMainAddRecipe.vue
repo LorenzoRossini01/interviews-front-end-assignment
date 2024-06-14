@@ -136,6 +136,13 @@ export default {
           console.log(error); // Gestione degli errori nella chiamata API
         });
     },
+
+    goBack() {
+      this.$router.push({
+        name: "recipes.index",
+        params: { page: this.recipeIndexPage },
+      });
+    },
   },
 
   created() {
@@ -151,7 +158,13 @@ export default {
   <main>
     <div class="container py-3">
       <form @submit.prevent="addRecipe()">
-        <h3 class="card-title my-3">Recipe Detail</h3>
+        <div class="title d-flex justify-content-between align-items-center">
+          <h3 class="card-title my-3">Recipe Detail</h3>
+          <a @click.native.prevent="goBack" href="" class="text-dark">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to List
+          </a>
+        </div>
         <div class="card p-3 mt-3 bg-body-tertiary">
           <div class="form-group">
             <label for="recipe-name">Recipe Name</label>
