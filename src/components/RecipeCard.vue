@@ -97,8 +97,8 @@ export default {
           <div class="col-8">
             <div class="detail-wrapper d-flex justify-content-between">
               <h3 class="h2">{{ recipe.name }}</h3>
-              <p>{{ dietName }}</p>
-              <p>
+              <p class="h4-lg">{{ dietName }}</p>
+              <p class="h2">
                 Only
                 <strong>{{ recipe.ingredients.length }}</strong> Ingredients
               </p>
@@ -208,7 +208,7 @@ export default {
     }
     p,
     .rating {
-      font-size: 1rem;
+      font-size: 1.5rem;
       margin: 0;
       color: rgb(175, 175, 175);
     }
