@@ -37,33 +37,36 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
       <router-link
         :to="{ name: 'recipes.index', props: { page: 1 } }"
         class="h2"
-        >RecipeBook</router-link
       >
+        RecipeBook
+      </router-link>
+
       <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarText"
-        aria-controls="navbarText"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form
-          class="d-flex mt-3 mt-lg-0"
+          class="d-flex mt-3 mt-lg-0 ms-auto justify-content-end align-items-center"
           role="search"
           @submit.prevent="submitSearch()"
         >
           <input
             v-model="searchedTerm"
-            class="form-control me-2 rounded-pill"
+            class="form-control me-2 rounded-pill w-auto"
             type="search"
             placeholder="Search for recipes"
             aria-label="Search"
@@ -80,6 +83,6 @@ export default {
 
 <style scoped lang="scss">
 .navbar {
-  height: 80px;
+  min-height: 80px;
 }
 </style>
